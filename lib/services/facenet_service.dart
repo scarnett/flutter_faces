@@ -1,8 +1,9 @@
 import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:tflite_flutter/tflite_flutter.dart' as tflite;
 import 'package:image/image.dart' as imglib;
+import 'package:tflite_flutter/tflite_flutter.dart' as tflite;
 
 class FaceNetService {
   static final FaceNetService _faceNetService = FaceNetService._internal();
@@ -52,7 +53,7 @@ class FaceNetService {
     /// Crops the face from the image and transforms it to an array of data
     List input = _preProcess(cameraImage, face);
 
-    /// Reshapes input and ouput to model format
+    /// Reshapes input and output to model format
     input = input.reshape([1, 112, 112, 3]);
     List output = List.generate(1, (int index) => List.filled(192, 0));
 
@@ -64,7 +65,7 @@ class FaceNetService {
   }
 
   /// Crops the image to be more easy to detect and transforms it to
-  /// model input.
+  /// model input
   List _preProcess(
     CameraImage image,
     Face faceDetected,

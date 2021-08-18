@@ -1,0 +1,6 @@
+{
+  "toggleCameraDirection": "Toggle Camera Direction",
+  "@toggleCameraDirection": {
+    "description": "The camera toggle floating action button tooltip message"
+  }
+}

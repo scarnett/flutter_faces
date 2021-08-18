@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
@@ -20,7 +21,7 @@ class CameraService {
   late String _imagePath;
   String get imagePath => this._imagePath;
 
-  Future startService(
+  Future<void> startService(
     CameraDescription cameraDescription,
   ) async {
     this._cameraDescription = cameraDescription;
@@ -35,8 +36,14 @@ class CameraService {
       this._cameraDescription.sensorOrientation,
     );
 
-    // Next, initialize the controller. This returns a Future.
     return this._cameraController.initialize();
+  }
+
+  Future<void> updateDescription(
+    CameraDescription cameraDescription,
+  ) async {
+    await _cameraController.dispose();
+    await startService(cameraDescription);
   }
 
   InputImageRotation rotationIntToImageRotation(

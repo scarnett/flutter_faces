@@ -29,7 +29,7 @@ class MLKitService {
   Future<List<Face>> getFacesFromImage(
     CameraImage image,
   ) async {
-    /// Preprocess the image  🧑🏻‍🔧
+    /// Preprocess the image
     InputImageData _firebaseImageMetadata = InputImageData(
       imageRotation: _cameraService.cameraRotation,
       inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw)!,
@@ -45,7 +45,7 @@ class MLKitService {
           .toList(),
     );
 
-    /// Transform the image input for the _faceDetector
+    /// Transform the image input for the faceDetector
     InputImage _firebaseVisionImage = InputImage.fromBytes(
       bytes: image.planes[0].bytes,
       inputImageData: _firebaseImageMetadata,

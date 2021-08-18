@@ -1,9 +1,14 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_faces/app/bloc/bloc.dart';
+import 'package:flutter_faces/app/widgets/widgets.dart';
 import 'package:flutter_faces/faces/googly_eyes/widgets/widgets.dart';
 import 'package:flutter_faces/faces/widgets/widgets.dart';
 import 'package:flutter_faces/services/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -16,7 +21,19 @@ class App extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: AppView(),
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', ''),
+        ],
+        home: BlocProvider(
+          create: (BuildContext context) => AppBloc(),
+          child: AppView(),
+        ),
       );
 }
 
@@ -35,14 +52,14 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   MLKitService _mlKitService = MLKitService();
 
   late Future _initializeControllerFuture;
+  late CameraLensDirection _cameraLensDirection;
 
-  bool cameraInitializated = false;
+  bool _cameraInitializated = false;
   bool _detectingFaces = false;
 
-  late String imagePath;
-  late Size imageSize;
+  late Size _imageSize;
 
-  Face? face;
+  Face? _face;
   bool _saving = false;
 
   @override
@@ -53,14 +70,25 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   }
 
   @override
+  void dispose() {
+    _cameraService.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(
     BuildContext context,
   ) =>
-      MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      BlocListener<AppBloc, AppState>(
+        listener: (
+          BuildContext context,
+          AppState state,
+        ) async =>
+            await _blocListener(context, state),
+        child: Scaffold(
+          body: _buildContent(),
+          floatingActionButton: CameraToggle(),
         ),
-        home: _buildContent(),
       );
 
   Future<void> _init() async {
@@ -68,8 +96,8 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
 
     List<CameraDescription> cameras = await availableCameras();
     CameraDescription cameraDescription = cameras.firstWhere(
-        (CameraDescription camera) =>
-            camera.lensDirection == CameraLensDirection.front);
+        (CameraDescription camera) => (camera.lensDirection ==
+            context.read<AppBloc>().state.cameraLensDirection));
 
     // Start the services
     await _faceNetService.loadModel();
@@ -79,13 +107,18 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
         _cameraService.startService(cameraDescription);
 
     await _initializeControllerFuture;
-    setState(() => cameraInitializated = true);
-    _frameFaces();
+
+    setState(() {
+      _cameraInitializated = true;
+      _cameraLensDirection = cameraDescription.lensDirection;
+    });
+
+    await _frameFaces();
   }
 
   /// Draws rectangles when detects faces
-  _frameFaces() {
-    imageSize = _cameraService.getImageSize();
+  Future<void> _frameFaces() async {
+    _imageSize = _cameraService.getImageSize();
     _cameraService.cameraController.startImageStream((CameraImage image) async {
       // If it's currently busy, avoids overprocessing
       if (_detectingFaces) {
@@ -98,14 +131,14 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
         List<Face> faces = await _mlKitService.getFacesFromImage(image);
         if (faces.length > 0) {
           // Preprocessing the image
-          setState(() => face = faces[0]);
+          setState(() => _face = faces[0]);
 
           if (_saving) {
             _saving = false;
-            _faceNetService.setCurrentPrediction(image, face!);
+            _faceNetService.setCurrentPrediction(image, _face!);
           }
         } else {
-          setState(() => face = null);
+          setState(() => _face = null);
         }
 
         _detectingFaces = false;
@@ -116,8 +149,23 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
     });
   }
 
+  Future<void> _blocListener(
+    BuildContext context,
+    AppState state,
+  ) async {
+    if (state.cameraLensDirection != _cameraLensDirection) {
+      setState(() {
+        _face = null;
+        _cameraInitializated = false;
+        _cameraLensDirection = state.cameraLensDirection;
+      });
+
+      _init();
+    }
+  }
+
   Widget _buildContent() {
-    if (!cameraInitializated) {
+    if (!_cameraInitializated) {
       return Center(child: CircularProgressIndicator());
     }
 
@@ -149,12 +197,12 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
                           children: <Widget>[
                             CameraPreview(_cameraService.cameraController),
                             FaceBorder(
-                              face: face,
-                              imageSize: imageSize,
+                              face: _face,
+                              imageSize: _imageSize,
                             ),
                             GooglyEyes(
-                              face: face,
-                              imageSize: imageSize,
+                              face: _face,
+                              imageSize: _imageSize,
                             ),
                           ],
                         ),
@@ -168,15 +216,15 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
             return Center(child: CircularProgressIndicator());
           },
         ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Icon(
-              Icons.menu,
-              size: 40.0,
-            ),
-          ),
-        ),
+        // SafeArea(
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(16.0),
+        //     child: Icon(
+        //       Icons.menu,
+        //       size: 40.0,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
