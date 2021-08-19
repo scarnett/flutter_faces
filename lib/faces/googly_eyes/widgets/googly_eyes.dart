@@ -8,6 +8,7 @@ class GooglyEyes extends StatefulWidget {
   final Size imageSize;
   final double maxRadius;
   final double minRadius;
+  final double eyeClosedThreshold;
 
   GooglyEyes({
     Key? key,
@@ -15,6 +16,7 @@ class GooglyEyes extends StatefulWidget {
     required this.imageSize,
     this.maxRadius: 60.0,
     this.minRadius: 20.0,
+    this.eyeClosedThreshold: 0.4,
   }) : super(key: key);
 
   @override
@@ -22,8 +24,11 @@ class GooglyEyes extends StatefulWidget {
 }
 
 class _GooglyEyesState extends State<GooglyEyes> {
-  final GooglyEyesPhysics leftEyePhysics = GooglyEyesPhysics();
-  final GooglyEyesPhysics rightEyePhysics = GooglyEyesPhysics();
+  final GooglyEyesPhysics _leftEyePhysics = GooglyEyesPhysics();
+  final GooglyEyesPhysics _rightEyePhysics = GooglyEyesPhysics();
+
+  bool _previousIsLeftOpen = true;
+  bool _previousIsRightOpen = true;
 
   @override
   Widget build(
@@ -39,9 +44,39 @@ class _GooglyEyesState extends State<GooglyEyes> {
         imageSize: widget.imageSize,
         maxRadius: widget.maxRadius,
         minRadius: widget.minRadius,
-        leftEyePhysics: leftEyePhysics,
-        rightEyePhysics: rightEyePhysics,
+        leftEyePhysics: _leftEyePhysics,
+        leftEyeOpen: _isLeftEyeOpen(),
+        rightEyePhysics: _rightEyePhysics,
+        rightEyeOpen: _isRightEyeOpen(),
       ),
     );
+  }
+
+  bool _isLeftEyeOpen() {
+    double? leftOpenScore = widget.face!.leftEyeOpenProbability;
+    bool leftEyeOpen;
+
+    if (leftOpenScore == null) {
+      leftEyeOpen = _previousIsLeftOpen;
+    } else {
+      leftEyeOpen = (leftOpenScore > widget.eyeClosedThreshold);
+      _previousIsLeftOpen = leftEyeOpen;
+    }
+
+    return leftEyeOpen;
+  }
+
+  bool _isRightEyeOpen() {
+    double? rightOpenScore = widget.face!.rightEyeOpenProbability;
+    bool rightEyeOpen;
+
+    if (rightOpenScore == null) {
+      rightEyeOpen = _previousIsRightOpen;
+    } else {
+      rightEyeOpen = (rightOpenScore > widget.eyeClosedThreshold);
+      _previousIsRightOpen = rightEyeOpen;
+    }
+
+    return rightEyeOpen;
   }
 }

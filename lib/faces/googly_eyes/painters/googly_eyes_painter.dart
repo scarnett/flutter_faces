@@ -8,17 +8,20 @@ class GooglyEyesPainter extends CustomPainter {
   final double minRadius;
   final Size imageSize;
   final Face face;
-
-  late GooglyEyesPhysics? leftEyePhysics;
-  late GooglyEyesPhysics? rightEyePhysics;
+  final GooglyEyesPhysics leftEyePhysics;
+  final bool leftEyeOpen;
+  final GooglyEyesPhysics rightEyePhysics;
+  final bool rightEyeOpen;
 
   GooglyEyesPainter({
     this.maxRadius: 60.0,
     this.minRadius: 20.0,
     required this.imageSize,
     required this.face,
-    this.leftEyePhysics,
-    this.rightEyePhysics,
+    required this.leftEyePhysics,
+    required this.leftEyeOpen,
+    required this.rightEyePhysics,
+    required this.rightEyeOpen,
   });
 
   @override
@@ -38,7 +41,7 @@ class GooglyEyesPainter extends CustomPainter {
         position: leftEye.position,
         scaleX: scaleX,
         scaleY: scaleY,
-        physics: leftEyePhysics!,
+        physics: leftEyePhysics,
       );
     }
 
@@ -51,7 +54,7 @@ class GooglyEyesPainter extends CustomPainter {
         position: rightEye.position,
         scaleX: scaleX,
         scaleY: scaleY,
-        physics: rightEyePhysics!,
+        physics: rightEyePhysics,
       );
     }
   }
