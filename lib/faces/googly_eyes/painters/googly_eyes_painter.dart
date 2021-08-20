@@ -12,6 +12,7 @@ class GooglyEyesPainter extends CustomPainter {
   final bool leftEyeOpen;
   final GooglyEyesPhysics rightEyePhysics;
   final bool rightEyeOpen;
+  final double outlineWidth;
 
   GooglyEyesPainter({
     this.maxRadius: 60.0,
@@ -22,6 +23,7 @@ class GooglyEyesPainter extends CustomPainter {
     required this.leftEyeOpen,
     required this.rightEyePhysics,
     required this.rightEyeOpen,
+    this.outlineWidth: 3.0,
   });
 
   @override
@@ -82,6 +84,11 @@ class GooglyEyesPainter extends CustomPainter {
       ..color = Colors.black
       ..style = PaintingStyle.fill;
 
+    Paint outlinePainter = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = outlineWidth;
+
     Offset eyePosition = Offset(
       (size.width - (position.dx * scaleX)),
       (position.dy * scaleY),
@@ -101,5 +108,6 @@ class GooglyEyesPainter extends CustomPainter {
         physics.nextIrisPosition(eyePosition, eyeRadius, irisRadius);
 
     canvas.drawCircle(irisPosition, irisRadius, irisPainter);
+    canvas.drawCircle(eyePosition, eyeRadius, outlinePainter);
   }
 }
