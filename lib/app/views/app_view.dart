@@ -59,7 +59,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
 
   late Size _imageSize;
 
-  Face? _face;
+  List<Face>? _faces;
   bool _saving = false;
 
   @override
@@ -131,14 +131,16 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
         List<Face> faces = await _mlKitService.getFacesFromImage(image);
         if (faces.length > 0) {
           // Preprocessing the image
-          setState(() => _face = faces[0]);
+          setState(() => _faces = faces);
 
           if (_saving) {
             _saving = false;
-            _faceNetService.setCurrentPrediction(image, _face!);
+
+            // TODO!
+            // _faceNetService.setCurrentPrediction(image, _face!);
           }
         } else {
-          setState(() => _face = null);
+          setState(() => _faces = null);
         }
 
         _detectingFaces = false;
@@ -155,7 +157,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   ) async {
     if (state.cameraLensDirection != _cameraLensDirection) {
       setState(() {
-        _face = null;
+        _faces = null;
         _cameraInitializated = false;
         _cameraLensDirection = state.cameraLensDirection;
       });
@@ -196,15 +198,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
                           fit: StackFit.expand,
                           children: <Widget>[
                             CameraPreview(_cameraService.cameraController),
-                            FaceBorder(
-                              face: _face,
-                              imageSize: _imageSize,
-                            ),
-                            GooglyEyes(
-                              face: _face,
-                              imageSize: _imageSize,
-                            ),
-                          ],
+                          ]..addAll(_buildFaces()),
                         ),
                       ),
                     ),
@@ -227,5 +221,25 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
         // ),
       ],
     );
+  }
+
+  List<Widget> _buildFaces() {
+    List<Widget> faces = <Widget>[];
+
+    if (_faces != null) {
+      for (Face face in _faces!) {
+        faces
+          ..add(FaceBorder(
+            face: face,
+            imageSize: _imageSize,
+          ))
+          ..add(GooglyEyes(
+            face: face,
+            imageSize: _imageSize,
+          ));
+      }
+    }
+
+    return faces;
   }
 }
