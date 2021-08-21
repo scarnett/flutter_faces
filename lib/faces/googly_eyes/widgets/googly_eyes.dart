@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
 import 'package:flutter_faces/faces/googly_eyes/painters/painters.dart';
 import 'package:flutter_faces/faces/googly_eyes/physics/physics.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
@@ -27,9 +28,6 @@ class _GooglyEyesState extends State<GooglyEyes> {
   final GooglyEyesPhysics _leftEyePhysics = GooglyEyesPhysics();
   final GooglyEyesPhysics _rightEyePhysics = GooglyEyesPhysics();
 
-  bool _previousIsLeftOpen = true;
-  bool _previousIsRightOpen = true;
-
   @override
   Widget build(
     BuildContext context,
@@ -45,38 +43,16 @@ class _GooglyEyesState extends State<GooglyEyes> {
         maxRadius: widget.maxRadius,
         minRadius: widget.minRadius,
         leftEyePhysics: _leftEyePhysics,
-        leftEyeOpen: _isLeftEyeOpen(),
+        leftEyeOpen: isEyeOpen(
+          widget.face!.leftEyeOpenProbability,
+          eyeClosedThreshold: widget.eyeClosedThreshold,
+        ),
         rightEyePhysics: _rightEyePhysics,
-        rightEyeOpen: _isRightEyeOpen(),
+        rightEyeOpen: isEyeOpen(
+          widget.face!.rightEyeOpenProbability,
+          eyeClosedThreshold: widget.eyeClosedThreshold,
+        ),
       ),
     );
-  }
-
-  bool _isLeftEyeOpen() {
-    double? leftOpenScore = widget.face!.leftEyeOpenProbability;
-    bool leftEyeOpen;
-
-    if (leftOpenScore == null) {
-      leftEyeOpen = _previousIsLeftOpen;
-    } else {
-      leftEyeOpen = (leftOpenScore > widget.eyeClosedThreshold);
-      _previousIsLeftOpen = leftEyeOpen;
-    }
-
-    return leftEyeOpen;
-  }
-
-  bool _isRightEyeOpen() {
-    double? rightOpenScore = widget.face!.rightEyeOpenProbability;
-    bool rightEyeOpen;
-
-    if (rightOpenScore == null) {
-      rightEyeOpen = _previousIsRightOpen;
-    } else {
-      rightEyeOpen = (rightOpenScore > widget.eyeClosedThreshold);
-      _previousIsRightOpen = rightEyeOpen;
-    }
-
-    return rightEyeOpen;
   }
 }
