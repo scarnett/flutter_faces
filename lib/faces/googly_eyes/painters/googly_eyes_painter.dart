@@ -44,6 +44,7 @@ class GooglyEyesPainter extends CustomPainter {
         scaleX: scaleX,
         scaleY: scaleY,
         physics: leftEyePhysics,
+        open: leftEyeOpen,
       );
     }
 
@@ -57,6 +58,7 @@ class GooglyEyesPainter extends CustomPainter {
         scaleX: scaleX,
         scaleY: scaleY,
         physics: rightEyePhysics,
+        open: rightEyeOpen,
       );
     }
   }
@@ -75,8 +77,13 @@ class GooglyEyesPainter extends CustomPainter {
     required double scaleX,
     required double scaleY,
     required GooglyEyesPhysics physics,
+    required bool open,
   }) {
     Paint eyePainter = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    Paint eyeLidPainter = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
@@ -101,13 +108,23 @@ class GooglyEyesPainter extends CustomPainter {
       eyeRadius = maxRadius;
     }
 
-    canvas.drawCircle(eyePosition, eyeRadius, eyePainter);
+    if (open) {
+      canvas.drawCircle(eyePosition, eyeRadius, eyePainter);
 
-    double irisRadius = (eyeRadius / 3.0);
-    Offset irisPosition =
-        physics.nextIrisPosition(eyePosition, eyeRadius, irisRadius);
+      double irisRadius = (eyeRadius / 3.0);
+      Offset irisPosition =
+          physics.nextIrisPosition(eyePosition, eyeRadius, irisRadius);
 
-    canvas.drawCircle(irisPosition, irisRadius, irisPainter);
+      canvas.drawCircle(irisPosition, irisRadius, irisPainter);
+    } else {
+      canvas.drawCircle(eyePosition, eyeRadius, eyeLidPainter);
+
+      double y = eyePosition.dy;
+      double start = (eyePosition.dx - eyeRadius);
+      double end = (eyePosition.dx + eyeRadius);
+      canvas.drawLine(Offset(start, y), Offset(end, y), outlinePainter);
+    }
+
     canvas.drawCircle(eyePosition, eyeRadius, outlinePainter);
   }
 }
