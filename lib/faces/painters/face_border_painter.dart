@@ -1,15 +1,18 @@
 import 'dart:ui';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class FaceBorderPainter extends CustomPainter {
   final Size imageSize;
   final Face face;
+  final CameraLensDirection cameraLensDirection;
 
   FaceBorderPainter({
     required this.imageSize,
     required this.face,
+    required this.cameraLensDirection,
   });
 
   @override

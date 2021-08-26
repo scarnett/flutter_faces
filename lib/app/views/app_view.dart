@@ -60,7 +60,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   late Size _imageSize;
 
   List<Face>? _faces;
-  bool _saving = false;
+  // bool _saving = false;
 
   @override
   void initState() {
@@ -133,12 +133,11 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
           // Preprocessing the image
           setState(() => _faces = faces);
 
-          if (_saving) {
-            _saving = false;
-
-            // TODO!
-            // _faceNetService.setCurrentPrediction(image, _face!);
-          }
+          // TODO!
+          // if (_saving) {
+          //   _saving = false;
+          //   _faceNetService.setCurrentPrediction(image, _face!);
+          // }
         } else {
           setState(() => _faces = null);
         }
@@ -224,6 +223,9 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   }
 
   List<Widget> _buildFaces() {
+    CameraLensDirection cameraLensDirection =
+        context.read<AppBloc>().state.cameraLensDirection;
+
     List<Widget> faces = <Widget>[];
 
     if (_faces != null) {
@@ -232,10 +234,12 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
           ..add(FaceBorder(
             face: face,
             imageSize: _imageSize,
+            cameraLensDirection: cameraLensDirection,
           ))
           ..add(GooglyEyes(
             face: face,
             imageSize: _imageSize,
+            cameraLensDirection: cameraLensDirection,
           ));
       }
     }

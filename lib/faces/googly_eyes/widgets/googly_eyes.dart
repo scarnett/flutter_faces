@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
 import 'package:flutter_faces/faces/googly_eyes/painters/painters.dart';
@@ -10,6 +11,7 @@ class GooglyEyes extends StatefulWidget {
   final double maxRadius;
   final double minRadius;
   final double eyeClosedThreshold;
+  final CameraLensDirection cameraLensDirection;
 
   GooglyEyes({
     Key? key,
@@ -18,6 +20,7 @@ class GooglyEyes extends StatefulWidget {
     this.maxRadius: 60.0,
     this.minRadius: 20.0,
     this.eyeClosedThreshold: 0.4,
+    this.cameraLensDirection: CameraLensDirection.front,
   }) : super(key: key);
 
   @override
@@ -52,6 +55,7 @@ class _GooglyEyesState extends State<GooglyEyes> {
           widget.face!.rightEyeOpenProbability,
           eyeClosedThreshold: widget.eyeClosedThreshold,
         ),
+        cameraLensDirection: widget.cameraLensDirection,
       ),
     );
   }

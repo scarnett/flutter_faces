@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
 import 'package:flutter_faces/faces/googly_eyes/physics/physics.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
@@ -12,6 +14,7 @@ class GooglyEyesPainter extends CustomPainter {
   final bool leftEyeOpen;
   final GooglyEyesPhysics rightEyePhysics;
   final bool rightEyeOpen;
+  final CameraLensDirection cameraLensDirection;
   final double outlineWidth;
 
   GooglyEyesPainter({
@@ -23,6 +26,7 @@ class GooglyEyesPainter extends CustomPainter {
     required this.leftEyeOpen,
     required this.rightEyePhysics,
     required this.rightEyeOpen,
+    required this.cameraLensDirection,
     this.outlineWidth: 3.0,
   });
 
@@ -96,12 +100,15 @@ class GooglyEyesPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = outlineWidth;
 
-    Offset eyePosition = Offset(
-      (size.width - (position.dx * scaleX)),
-      (position.dy * scaleY),
+    Offset eyePosition = getEyePosition(
+      size: size,
+      position: position,
+      scaleX: scaleX,
+      scaleY: scaleY,
+      cameraLensDirection: cameraLensDirection,
     );
 
-    double eyeRadius = (maxRadius - (rect.left.toDouble() * (scaleX / 4.0)));
+    double eyeRadius = (maxRadius - ((size.width / rect.width) * 30.0));
     if (eyeRadius < minRadius) {
       eyeRadius = minRadius;
     } else if (eyeRadius > maxRadius) {
