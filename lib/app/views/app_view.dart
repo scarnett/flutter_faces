@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/app/bloc/bloc.dart';
 import 'package:flutter_faces/app/widgets/widgets.dart';
-import 'package:flutter_faces/faces/googly_eyes/widgets/widgets.dart';
 import 'package:flutter_faces/faces/widgets/widgets.dart';
 import 'package:flutter_faces/services/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
