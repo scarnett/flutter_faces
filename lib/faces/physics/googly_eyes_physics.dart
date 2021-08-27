@@ -98,7 +98,7 @@ class GooglyEyesPhysics {
   ) {
     if (_isZero(velocity)) {
       velocity = 0.0;
-    } else if (velocity > 0) {
+    } else if (velocity > 0.0) {
       velocity = math.max(0.0, (velocity - (_friction * simulationRate)));
     } else {
       velocity = math.min(0.0, (velocity + (_friction * simulationRate)));
