@@ -19,7 +19,7 @@ class GooglyEyesPainter extends CustomPainter {
 
   GooglyEyesPainter({
     this.maxRadius: 60.0,
-    this.minRadius: 20.0,
+    this.minRadius: 10.0,
     required this.imageSize,
     required this.face,
     required this.leftEyePhysics,

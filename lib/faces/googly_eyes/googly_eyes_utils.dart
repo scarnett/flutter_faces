@@ -16,6 +16,43 @@ bool isEyeOpen(
   return eyeOpen;
 }
 
+RRect getFaceBorderRect({
+  required Rect rect,
+  required Size widgetSize,
+  required double scaleX,
+  required double scaleY,
+  required CameraLensDirection cameraLensDirection,
+}) {
+  RRect rrect;
+
+  switch (cameraLensDirection) {
+    case CameraLensDirection.back:
+      rrect = RRect.fromLTRBR(
+        (rect.left.toDouble() * scaleX),
+        (rect.top.toDouble() * scaleY),
+        (rect.right.toDouble() * scaleX),
+        (rect.bottom.toDouble() * scaleY),
+        Radius.circular(10.0),
+      );
+
+      break;
+
+    case CameraLensDirection.front:
+    default:
+      rrect = RRect.fromLTRBR(
+        (widgetSize.width - (rect.left.toDouble() * scaleX)),
+        (rect.top.toDouble() * scaleY),
+        (widgetSize.width - (rect.right.toDouble() * scaleX)),
+        (rect.bottom.toDouble() * scaleY),
+        Radius.circular(10.0),
+      );
+
+      break;
+  }
+
+  return rrect;
+}
+
 Offset getEyePosition({
   required Size size,
   required Offset position,
@@ -28,7 +65,7 @@ Offset getEyePosition({
   switch (cameraLensDirection) {
     case CameraLensDirection.back:
       eyePosition = Offset(
-        (size.width + (position.dx * scaleX)),
+        (position.dx * scaleX),
         (position.dy * scaleY),
       );
 

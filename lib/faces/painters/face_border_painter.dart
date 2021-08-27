@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class FaceBorderPainter extends CustomPainter {
@@ -36,11 +37,12 @@ class FaceBorderPainter extends CustomPainter {
     }
 
     canvas.drawRRect(
-      _scaleRect(
+      getFaceBorderRect(
         rect: face.boundingBox,
         widgetSize: size,
         scaleX: (size.width / imageSize.width),
         scaleY: (size.height / imageSize.height),
+        cameraLensDirection: cameraLensDirection,
       ),
       paint,
     );
@@ -52,17 +54,3 @@ class FaceBorderPainter extends CustomPainter {
   ) =>
       (oldDelegate.imageSize != imageSize) || (oldDelegate.face != face);
 }
-
-RRect _scaleRect({
-  required Rect rect,
-  required Size widgetSize,
-  double scaleX: 0.0,
-  double scaleY: 0.0,
-}) =>
-    RRect.fromLTRBR(
-      (widgetSize.width - (rect.left.toDouble() * scaleX)),
-      (rect.top.toDouble() * scaleY),
-      (widgetSize.width - (rect.right.toDouble() * scaleX)),
-      (rect.bottom.toDouble() * scaleY),
-      Radius.circular(10.0),
-    );
