@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
+import 'package:flutter_faces/faces/faces.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class FaceBorderPainter extends CustomPainter {

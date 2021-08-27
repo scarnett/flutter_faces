@@ -1,7 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
+import 'package:flutter_faces/faces/faces.dart';
 import 'package:flutter_faces/faces/googly_eyes/physics/physics.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
@@ -108,6 +110,8 @@ class GooglyEyesPainter extends CustomPainter {
       cameraLensDirection: cameraLensDirection,
     );
 
+    final double headEulerAngleZ = face.headEulerAngleZ!;
+    final double radians = ((headEulerAngleZ * math.pi) / 180);
     double eyeRadius = (maxRadius - ((size.width / rect.width) * 30.0));
     if (eyeRadius < minRadius) {
       eyeRadius = minRadius;
@@ -125,11 +129,16 @@ class GooglyEyesPainter extends CustomPainter {
       canvas.drawCircle(irisPosition, irisRadius, irisPainter);
     } else {
       canvas.drawCircle(eyePosition, eyeRadius, eyeLidPainter);
+      canvas.save();
 
-      double y = eyePosition.dy;
-      double start = (eyePosition.dx - eyeRadius);
-      double end = (eyePosition.dx + eyeRadius);
+      final double x = eyePosition.dx;
+      final double y = eyePosition.dy;
+      final double start = (eyePosition.dx - eyeRadius);
+      final double end = (eyePosition.dx + eyeRadius);
+
+      rotateCanvas(canvas: canvas, cx: x, cy: y, angle: radians);
       canvas.drawLine(Offset(start, y), Offset(end, y), outlinePainter);
+      canvas.restore();
     }
 
     canvas.drawCircle(eyePosition, eyeRadius, outlinePainter);

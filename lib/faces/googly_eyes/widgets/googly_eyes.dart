@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
-import 'package:flutter_faces/faces/googly_eyes/painters/painters.dart';
+import 'package:flutter_faces/faces/faces.dart';
 import 'package:flutter_faces/faces/googly_eyes/physics/physics.dart';
+import 'package:flutter_faces/faces/painters/painters.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class GooglyEyes extends StatefulWidget {

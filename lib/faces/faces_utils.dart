@@ -83,3 +83,14 @@ Offset getEyePosition({
 
   return eyePosition;
 }
+
+void rotateCanvas({
+  required Canvas canvas,
+  required double cx,
+  required double cy,
+  required double angle,
+}) {
+  canvas.translate(cx, cy);
+  canvas.rotate(angle);
+  canvas.translate(-cx, -cy);
+}

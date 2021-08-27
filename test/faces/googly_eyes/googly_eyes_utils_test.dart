@@ -1,4 +1,4 @@
-import 'package:flutter_faces/faces/googly_eyes/googly_eyes.dart';
+import 'package:flutter_faces/faces/faces.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
