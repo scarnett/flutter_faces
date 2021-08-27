@@ -86,7 +86,15 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
             await _blocListener(context, state),
         child: Scaffold(
           body: _buildContent(),
-          floatingActionButton: CameraToggle(),
+          floatingActionButton: ExpandableFab(
+            distance: 112.0,
+            children: [
+              SettingsButton(),
+              CameraToggleButton(),
+              SnapPictureButton(),
+              RecordVideoButton(),
+            ],
+          ),
         ),
       );
 

@@ -3,28 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/app/bloc/bloc.dart';
+import 'package:flutter_faces/app/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CameraToggle extends StatefulWidget {
-  CameraToggle({
+class CameraToggleButton extends StatefulWidget {
+  CameraToggleButton({
     Key? key,
   }) : super(key: key);
 
   @override
-  _CameraToggleState createState() => _CameraToggleState();
+  _CameraToggleButtonState createState() => _CameraToggleButtonState();
 }
 
-class _CameraToggleState extends State<CameraToggle> {
+class _CameraToggleButtonState extends State<CameraToggleButton> {
   @override
   Widget build(
     BuildContext context,
   ) =>
-      Tooltip(
+      ActionButton(
+        onPressed: _tapToggleCamera,
+        icon: Icon(_getIcon()),
         message: AppLocalizations.of(context)!.toggleCameraDirection,
-        child: FloatingActionButton(
-          onPressed: _tapToggleCamera,
-          child: Icon(_getIcon()),
-        ),
       );
 
   IconData _getIcon() {

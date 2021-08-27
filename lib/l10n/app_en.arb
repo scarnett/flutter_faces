@@ -2,5 +2,17 @@
   "toggleCameraDirection": "Toggle Camera Direction",
   "@toggleCameraDirection": {
     "description": "The camera toggle floating action button tooltip message"
+  },
+  "snapPicture": "Snap a Picture",
+  "@snapPictureDirection": {
+    "description": "Snaps a picture using the camera"
+  },
+  "recordVideo": "Record a Video",
+  "@recordVideoDirection": {
+    "description": "Starts recording a video using the camera"
+  },
+  "settings": "Settings",
+  "@settingsDirection": {
+    "description": "Displays the application settings"
   }
 }

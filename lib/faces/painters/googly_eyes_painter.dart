@@ -136,7 +136,13 @@ class GooglyEyesPainter extends CustomPainter {
       final double start = (eyePosition.dx - eyeRadius);
       final double end = (eyePosition.dx + eyeRadius);
 
-      rotateCanvas(canvas: canvas, cx: x, cy: y, angle: radians);
+      rotateCanvas(
+        canvas: canvas,
+        cx: x,
+        cy: y,
+        angle: radians,
+      );
+
       canvas.drawLine(Offset(start, y), Offset(end, y), outlinePainter);
       canvas.restore();
     }
