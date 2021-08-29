@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -110,8 +108,6 @@ class GooglyEyesPainter extends CustomPainter {
       cameraLensDirection: cameraLensDirection,
     );
 
-    final double headEulerAngleZ = face.headEulerAngleZ!;
-    final double radians = ((headEulerAngleZ * math.pi) / 180);
     double eyeRadius = (maxRadius - ((size.width / rect.width) * 30.0));
     if (eyeRadius < minRadius) {
       eyeRadius = minRadius;
@@ -133,16 +129,17 @@ class GooglyEyesPainter extends CustomPainter {
 
       final double x = eyePosition.dx;
       final double y = eyePosition.dy;
-      final double start = (eyePosition.dx - eyeRadius);
-      final double end = (eyePosition.dx + eyeRadius);
 
-      rotateCanvas(
+      rotateEyeLid(
         canvas: canvas,
-        cx: x,
-        cy: y,
-        angle: radians,
+        x: x,
+        y: y,
+        headEulerAngleZ: face.headEulerAngleZ!,
+        cameraLensDirection: cameraLensDirection,
       );
 
+      final double start = (x - eyeRadius);
+      final double end = (x + eyeRadius);
       canvas.drawLine(Offset(start, y), Offset(end, y), outlinePainter);
       canvas.restore();
     }

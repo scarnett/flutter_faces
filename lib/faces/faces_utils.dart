@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 
@@ -82,6 +84,34 @@ Offset getEyePosition({
   }
 
   return eyePosition;
+}
+
+void rotateEyeLid({
+  required Canvas canvas,
+  required double x,
+  required double y,
+  required double headEulerAngleZ,
+  required CameraLensDirection cameraLensDirection,
+}) {
+  double radians;
+
+  switch (cameraLensDirection) {
+    case CameraLensDirection.back:
+      radians = (headEulerAngleZ / 180);
+      break;
+
+    case CameraLensDirection.front:
+    default:
+      radians = ((headEulerAngleZ * math.pi) / 180);
+      break;
+  }
+
+  rotateCanvas(
+    canvas: canvas,
+    cx: x,
+    cy: y,
+    angle: radians,
+  );
 }
 
 void rotateCanvas({
