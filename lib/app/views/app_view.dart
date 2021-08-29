@@ -216,15 +216,6 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
             return Center(child: CircularProgressIndicator());
           },
         ),
-        // SafeArea(
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(16.0),
-        //     child: Icon(
-        //       Icons.menu,
-        //       size: 40.0,
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

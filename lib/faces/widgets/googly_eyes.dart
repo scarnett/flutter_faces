@@ -19,7 +19,7 @@ class GooglyEyes extends StatefulWidget {
     required this.imageSize,
     this.maxRadius: 60.0,
     this.minRadius: 10.0,
-    this.eyeClosedThreshold: 0.4,
+    this.eyeClosedThreshold: 0.3,
     this.cameraLensDirection: CameraLensDirection.front,
   }) : super(key: key);
 
