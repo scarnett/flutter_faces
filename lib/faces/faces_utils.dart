@@ -97,12 +97,12 @@ void rotateEyeLid({
 
   switch (cameraLensDirection) {
     case CameraLensDirection.back:
-      radians = (headEulerAngleZ / 180);
+      radians = (headEulerAngleZ / 180.0);
       break;
 
     case CameraLensDirection.front:
     default:
-      radians = ((headEulerAngleZ * math.pi) / 180);
+      radians = ((headEulerAngleZ * math.pi) / 180.0);
       break;
   }
 

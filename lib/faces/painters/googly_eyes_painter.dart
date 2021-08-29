@@ -108,7 +108,7 @@ class GooglyEyesPainter extends CustomPainter {
       cameraLensDirection: cameraLensDirection,
     );
 
-    double eyeRadius = (maxRadius - ((size.width / rect.width) * 30.0));
+    double eyeRadius = (maxRadius - ((size.width / rect.width) * 26.0));
     if (eyeRadius < minRadius) {
       eyeRadius = minRadius;
     } else if (eyeRadius > maxRadius) {
