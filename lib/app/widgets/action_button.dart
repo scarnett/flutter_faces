@@ -16,26 +16,25 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(
     BuildContext context,
-  ) {
-    final ThemeData theme = Theme.of(context);
-
-    return Tooltip(
-      preferBelow: false,
-      verticalOffset: 30.0,
-      message: message,
-      child: Material(
-        shape: const CircleBorder(),
-        clipBehavior: Clip.antiAlias,
-        color: theme.accentColor,
-        elevation: 4.0,
-        child: IconTheme.merge(
-          data: theme.accentIconTheme,
-          child: IconButton(
-            onPressed: onPressed,
-            icon: icon,
+  ) =>
+      Tooltip(
+        preferBelow: false,
+        verticalOffset: 30.0,
+        message: message,
+        child: Material(
+          shape: const CircleBorder(),
+          clipBehavior: Clip.antiAlias,
+          color: Theme.of(context).accentColor.withOpacity(0.5),
+          elevation: 0.0,
+          child: IconTheme.merge(
+            data: Theme.of(context).accentIconTheme,
+            child: IconButton(
+              onPressed: onPressed,
+              icon: icon,
+              iconSize: 30.0,
+              padding: const EdgeInsets.all(20.0),
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

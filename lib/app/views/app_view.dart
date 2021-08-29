@@ -18,9 +18,7 @@ class App extends StatelessWidget {
     BuildContext context,
   ) =>
       MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: appThemeData,
         localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -87,15 +85,6 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
             await _blocListener(context, state),
         child: Scaffold(
           body: _buildContent(),
-          floatingActionButton: ExpandableFab(
-            distance: 112.0,
-            children: [
-              SettingsButton(),
-              CameraToggleButton(),
-              SnapPictureButton(),
-              RecordVideoButton(),
-            ],
-          ),
         ),
       );
 
@@ -187,12 +176,20 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
             AsyncSnapshot<void> snapshot,
           ) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return buildCameraOrientationBox(
-                context: context,
-                controller: _cameraService.cameraController,
-                children: <Widget>[
-                  CameraPreview(_cameraService.cameraController),
-                ]..addAll(_buildFaces()),
+              return Stack(
+                children: [
+                  buildCameraOrientationBox(
+                    context: context,
+                    controller: _cameraService.cameraController,
+                    children: <Widget>[
+                      CameraPreview(_cameraService.cameraController),
+                    ]..addAll(_buildFaces()),
+                  ),
+                  Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: CameraOptions(),
+                  ),
+                ],
               );
             }
 

@@ -84,19 +84,19 @@ class GooglyEyesPainter extends CustomPainter {
     required bool open,
   }) {
     Paint eyePainter = Paint()
-      ..color = Colors.white
+      ..color = Colors.white // TODO!
       ..style = PaintingStyle.fill;
 
     Paint eyeLidPainter = Paint()
-      ..color = Colors.white
+      ..color = Colors.white // TODO!
       ..style = PaintingStyle.fill;
 
     Paint irisPainter = Paint()
-      ..color = Colors.black
+      ..color = Colors.black // TODO!
       ..style = PaintingStyle.fill;
 
     Paint outlinePainter = Paint()
-      ..color = Colors.black
+      ..color = Colors.black // TODO!
       ..style = PaintingStyle.stroke
       ..strokeWidth = outlineWidth;
 

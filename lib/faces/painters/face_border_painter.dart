@@ -28,12 +28,12 @@ class FaceBorderPainter extends CustomPainter {
       paint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.0
-        ..color = Colors.red;
+        ..color = Colors.red; // TODO!
     } else {
       paint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.0
-        ..color = Colors.green;
+        ..color = Colors.green; // TODO!
     }
 
     canvas.drawRRect(
