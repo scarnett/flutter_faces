@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_faces/app/app.dart';
 import 'package:flutter_faces/app/bloc/bloc.dart';
 import 'package:flutter_faces/app/widgets/widgets.dart';
 import 'package:flutter_faces/faces/widgets/widgets.dart';
@@ -177,8 +178,6 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
       return Center(child: CircularProgressIndicator());
     }
 
-    final double width = MediaQuery.of(context).size.width;
-
     return Stack(
       children: [
         FutureBuilder<void>(
@@ -188,28 +187,12 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
             AsyncSnapshot<void> snapshot,
           ) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Transform.scale(
-                scale: 1.0,
-                child: AspectRatio(
-                  aspectRatio: MediaQuery.of(context).size.aspectRatio,
-                  child: OverflowBox(
-                    alignment: Alignment.center,
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Container(
-                        width: width,
-                        height: (width *
-                            _cameraService.cameraController.value.aspectRatio),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            CameraPreview(_cameraService.cameraController),
-                          ]..addAll(_buildFaces()),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              return buildCameraOrientationBox(
+                context: context,
+                controller: _cameraService.cameraController,
+                children: <Widget>[
+                  CameraPreview(_cameraService.cameraController),
+                ]..addAll(_buildFaces()),
               );
             }
 
@@ -221,12 +204,12 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   }
 
   List<Widget> _buildFaces() {
-    CameraLensDirection cameraLensDirection =
-        context.read<AppBloc>().state.cameraLensDirection;
-
     List<Widget> faces = <Widget>[];
 
     if (_faces != null) {
+      CameraLensDirection cameraLensDirection =
+          context.read<AppBloc>().state.cameraLensDirection;
+
       for (Face face in _faces!) {
         faces
           ..add(FaceBorder(
