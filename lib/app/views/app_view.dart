@@ -83,8 +83,12 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
           AppState state,
         ) async =>
             await _blocListener(context, state),
-        child: Scaffold(
-          body: _buildContent(),
+        child: AppUiOverlayStyle(
+          child: Scaffold(
+            body: _buildContent(),
+            extendBody: true,
+            extendBodyBehindAppBar: true,
+          ),
         ),
       );
 

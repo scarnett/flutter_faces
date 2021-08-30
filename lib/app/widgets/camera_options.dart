@@ -20,6 +20,7 @@ class _CameraOptionsState extends State<CameraOptions> {
       Container(
         color: Theme.of(context).accentColor.withOpacity(0.3),
         width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         child: CarouselSlider(
           options: CarouselOptions(
             aspectRatio: 4.0,
