@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,6 +61,8 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   List<Face>? _faces;
   // bool _saving = false;
 
+  final Future<FirebaseApp> _initFirebase = Firebase.initializeApp();
+
   @override
   void initState() {
     super.initState();
@@ -77,19 +80,33 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   Widget build(
     BuildContext context,
   ) =>
-      BlocListener<AppBloc, AppState>(
-        listener: (
+      FutureBuilder(
+        future: _initFirebase,
+        builder: (
           BuildContext context,
-          AppState state,
-        ) async =>
-            await _blocListener(context, state),
-        child: AppUiOverlayStyle(
-          child: Scaffold(
-            body: _buildContent(),
-            extendBody: true,
-            extendBodyBehindAppBar: true,
-          ),
-        ),
+          AsyncSnapshot<Object?> snapshot,
+        ) {
+          if (snapshot.hasError) {
+            return AppError();
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            return BlocListener<AppBloc, AppState>(
+              listener: (
+                BuildContext context,
+                AppState state,
+              ) async =>
+                  await _blocListener(context, state),
+              child: AppUiOverlayStyle(
+                child: Scaffold(
+                  body: _buildContent(),
+                  extendBody: true,
+                  extendBodyBehindAppBar: true,
+                ),
+              ),
+            );
+          }
+
+          return AppLoader();
+        },
       );
 
   Future<void> _init() async {
@@ -168,7 +185,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
 
   Widget _buildContent() {
     if (!_cameraInitializated) {
-      return Center(child: CircularProgressIndicator());
+      return AppLoader();
     }
 
     return Stack(
@@ -197,7 +214,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
               );
             }
 
-            return Center(child: CircularProgressIndicator());
+            return AppLoader();
           },
         ),
       ],
