@@ -39,7 +39,7 @@ class FaceBorderPainter extends CustomPainter {
     canvas.drawRRect(
       getFaceBorderRect(
         rect: face.boundingBox,
-        widgetSize: size,
+        size: size,
         scaleX: (size.width / imageSize.width),
         scaleY: (size.height / imageSize.height),
         cameraLensDirection: cameraLensDirection,

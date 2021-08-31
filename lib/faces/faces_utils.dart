@@ -20,7 +20,7 @@ bool isEyeOpen(
 
 RRect getFaceBorderRect({
   required Rect rect,
-  required Size widgetSize,
+  required Size size,
   required double scaleX,
   required double scaleY,
   required CameraLensDirection cameraLensDirection,
@@ -42,9 +42,9 @@ RRect getFaceBorderRect({
     case CameraLensDirection.front:
     default:
       rrect = RRect.fromLTRBR(
-        (widgetSize.width - (rect.left.toDouble() * scaleX)),
+        (size.width - (rect.left.toDouble() * scaleX)),
         (rect.top.toDouble() * scaleY),
-        (widgetSize.width - (rect.right.toDouble() * scaleX)),
+        (size.width - (rect.right.toDouble() * scaleX)),
         (rect.bottom.toDouble() * scaleY),
         Radius.circular(10.0),
       );
@@ -106,7 +106,7 @@ void rotateEyeLid({
       break;
   }
 
-  rotateCanvas(
+  _rotateCanvas(
     canvas: canvas,
     cx: x,
     cy: y,
@@ -114,7 +114,7 @@ void rotateEyeLid({
   );
 }
 
-void rotateCanvas({
+void _rotateCanvas({
   required Canvas canvas,
   required double cx,
   required double cy,
