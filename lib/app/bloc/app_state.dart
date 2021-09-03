@@ -2,30 +2,42 @@ part of 'app_bloc.dart';
 
 @immutable
 class AppState extends Equatable {
-  final CameraLensDirection cameraLensDirection;
+  final AppStatus status;
+  final User? user;
 
   AppState({
-    this.cameraLensDirection: CameraLensDirection.front,
+    this.status: AppStatus.unauthenticated,
+    this.user: User.empty,
   });
 
   const AppState._({
-    this.cameraLensDirection: CameraLensDirection.front,
+    this.status: AppStatus.unauthenticated,
+    this.user: User.empty,
   });
 
   const AppState.initial() : this._();
 
-  AppState copyWith({
-    CameraLensDirection? cameraLensDirection,
-  }) =>
+  const AppState.authenticated(
+    User user,
+  ) : this._(status: AppStatus.authenticated, user: user);
+
+  const AppState.unauthenticated() : this._(status: AppStatus.unauthenticated);
+
+  AppState copyWith(
+    AppStatus? status,
+    User? user,
+  ) =>
       AppState._(
-        cameraLensDirection: cameraLensDirection ?? this.cameraLensDirection,
+        status: status ?? this.status,
+        user: user ?? this.user,
       );
 
   @override
   List<Object?> get props => [
-        cameraLensDirection,
+        status,
+        user,
       ];
 
   @override
-  String toString() => 'AppState{cameraLensDirection: $cameraLensDirection}';
+  String toString() => 'AppState{status: $status, user: $user}';
 }

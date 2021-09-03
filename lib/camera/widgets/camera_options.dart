@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_faces/app/widgets/widgets.dart';
+import 'package:flutter_faces/camera/widgets/widgets.dart';
 
 class CameraOptions extends StatefulWidget {
   CameraOptions({
@@ -29,10 +29,10 @@ class _CameraOptionsState extends State<CameraOptions> {
             initialPage: 1,
           ),
           items: [
-            SettingsButton(),
+            CameraSettingsButton(),
             CameraToggleButton(),
-            SnapPictureButton(),
-            RecordVideoButton(),
+            CameraSnapPictureButton(),
+            CameraRecordVideoButton(),
           ],
         ),
       );

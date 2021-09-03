@@ -2,8 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_faces/app/bloc/bloc.dart';
-import 'package:flutter_faces/app/widgets/widgets.dart';
+import 'package:flutter_faces/camera/bloc/bloc.dart';
+import 'package:flutter_faces/camera/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CameraToggleButton extends StatefulWidget {
@@ -20,14 +20,14 @@ class _CameraToggleButtonState extends State<CameraToggleButton> {
   Widget build(
     BuildContext context,
   ) =>
-      ActionButton(
+      CameraActionButton(
         onPressed: _tapToggleCamera,
         icon: Icon(_getIcon()),
         message: AppLocalizations.of(context)!.toggleCameraDirection,
       );
 
   IconData _getIcon() {
-    if (context.read<AppBloc>().state.cameraLensDirection ==
+    if (context.read<CameraBloc>().state.cameraLensDirection ==
         CameraLensDirection.front) {
       return Icons.camera_front;
     }
@@ -36,5 +36,5 @@ class _CameraToggleButtonState extends State<CameraToggleButton> {
   }
 
   void _tapToggleCamera() =>
-      context.read<AppBloc>().add(ToggleCameraLensDirection());
+      context.read<CameraBloc>().add(ToggleCameraLensDirection());
 }

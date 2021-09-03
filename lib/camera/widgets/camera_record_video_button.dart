@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_faces/app/widgets/widgets.dart';
+import 'package:flutter_faces/camera/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RecordVideoButton extends StatefulWidget {
-  RecordVideoButton({
+class CameraRecordVideoButton extends StatefulWidget {
+  CameraRecordVideoButton({
     Key? key,
   }) : super(key: key);
 
   @override
-  _RecordVideoButtonState createState() => _RecordVideoButtonState();
+  _CameraRecordVideoButtonState createState() =>
+      _CameraRecordVideoButtonState();
 }
 
-class _RecordVideoButtonState extends State<RecordVideoButton> {
+class _CameraRecordVideoButtonState extends State<CameraRecordVideoButton> {
   @override
   Widget build(
     BuildContext context,
   ) =>
-      ActionButton(
+      CameraActionButton(
         onPressed: _tapRecordVideo,
         icon: Icon(Icons.play_arrow),
         message: AppLocalizations.of(context)!.recordVideo,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ActionButton extends StatelessWidget {
+class CameraActionButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget icon;
   final String message;
 
-  const ActionButton({
+  const CameraActionButton({
     Key? key,
     this.onPressed,
     required this.icon,

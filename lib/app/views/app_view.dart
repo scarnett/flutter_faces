@@ -1,19 +1,42 @@
-import 'package:camera/camera.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/app/app.dart';
 import 'package:flutter_faces/app/bloc/bloc.dart';
-import 'package:flutter_faces/app/widgets/widgets.dart';
-import 'package:flutter_faces/faces/widgets/widgets.dart';
-import 'package:flutter_faces/services/services.dart';
+import 'package:flutter_faces/auth/auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class App extends StatelessWidget {
+  final AuthenticationRepository _authenticationRepository;
+
+  const App({
+    Key? key,
+    required AuthenticationRepository authenticationRepository,
+  })  : _authenticationRepository = authenticationRepository,
+        super(key: key);
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) =>
+      RepositoryProvider.value(
+        value: _authenticationRepository,
+        child: BlocProvider(
+          create: (BuildContext context) => AppBloc(
+            authenticationRepository: _authenticationRepository,
+          ),
+          child: AppView(),
+        ),
+      );
+}
+
+class AppView extends StatelessWidget {
+  AppView({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(
     BuildContext context,
@@ -29,220 +52,9 @@ class App extends StatelessWidget {
         supportedLocales: [
           Locale('en', ''),
         ],
-        home: BlocProvider(
-          create: (BuildContext context) => AppBloc(),
-          child: AppView(),
+        home: FlowBuilder<AppStatus>(
+          state: context.select((AppBloc bloc) => bloc.state.status),
+          onGeneratePages: onGenerateAppViewPages,
         ),
       );
-}
-
-class AppView extends StatefulWidget {
-  AppView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _AppViewState createState() => _AppViewState();
-}
-
-class _AppViewState extends State<AppView> with WidgetsBindingObserver {
-  CameraService _cameraService = CameraService();
-  FaceNetService _faceNetService = FaceNetService();
-  MLKitService _mlKitService = MLKitService();
-
-  late Future _initializeControllerFuture;
-  late CameraLensDirection _cameraLensDirection;
-
-  bool _cameraInitializated = false;
-  bool _detectingFaces = false;
-
-  late Size _imageSize;
-
-  List<Face>? _faces;
-  // bool _saving = false;
-
-  final Future<FirebaseApp> _initFirebase = Firebase.initializeApp();
-
-  @override
-  void initState() {
-    super.initState();
-    _init();
-    WidgetsBinding.instance!.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    _cameraService.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(
-    BuildContext context,
-  ) =>
-      FutureBuilder(
-        future: _initFirebase,
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<Object?> snapshot,
-        ) {
-          if (snapshot.hasError) {
-            return AppError();
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            return BlocListener<AppBloc, AppState>(
-              listener: (
-                BuildContext context,
-                AppState state,
-              ) async =>
-                  await _blocListener(context, state),
-              child: AppUiOverlayStyle(
-                child: Scaffold(
-                  body: _buildContent(),
-                  extendBody: true,
-                  extendBodyBehindAppBar: true,
-                ),
-              ),
-            );
-          }
-
-          return AppLoader();
-        },
-      );
-
-  Future<void> _init() async {
-    await [Permission.camera].request();
-
-    List<CameraDescription> cameras = await availableCameras();
-    CameraDescription cameraDescription = cameras.firstWhere(
-        (CameraDescription camera) => (camera.lensDirection ==
-            context.read<AppBloc>().state.cameraLensDirection));
-
-    // Start the services
-    await _faceNetService.loadModel();
-    _mlKitService.initialize();
-
-    _initializeControllerFuture =
-        _cameraService.startService(cameraDescription);
-
-    await _initializeControllerFuture;
-
-    setState(() {
-      _cameraInitializated = true;
-      _cameraLensDirection = cameraDescription.lensDirection;
-    });
-
-    await _frameFaces();
-  }
-
-  /// Draws rectangles when detects faces
-  Future<void> _frameFaces() async {
-    _imageSize = _cameraService.getImageSize();
-    _cameraService.cameraController.startImageStream((CameraImage image) async {
-      // If it's currently busy, avoids overprocessing
-      if (_detectingFaces) {
-        return;
-      }
-
-      _detectingFaces = true;
-
-      try {
-        List<Face> faces = await _mlKitService.getFacesFromImage(image);
-        if (faces.length > 0) {
-          // Preprocessing the image
-          setState(() => _faces = faces);
-
-          // TODO!
-          // if (_saving) {
-          //   _saving = false;
-          //   _faceNetService.setCurrentPrediction(image, _face!);
-          // }
-        } else {
-          setState(() => _faces = null);
-        }
-
-        _detectingFaces = false;
-      } catch (e) {
-        print(e);
-        _detectingFaces = false;
-      }
-    });
-  }
-
-  Future<void> _blocListener(
-    BuildContext context,
-    AppState state,
-  ) async {
-    if (state.cameraLensDirection != _cameraLensDirection) {
-      setState(() {
-        _faces = null;
-        _cameraInitializated = false;
-        _cameraLensDirection = state.cameraLensDirection;
-      });
-
-      _init();
-    }
-  }
-
-  Widget _buildContent() {
-    if (!_cameraInitializated) {
-      return AppLoader();
-    }
-
-    return Stack(
-      children: [
-        FutureBuilder<void>(
-          future: _initializeControllerFuture,
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<void> snapshot,
-          ) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Stack(
-                children: [
-                  buildCameraOrientationBox(
-                    context: context,
-                    controller: _cameraService.cameraController,
-                    children: <Widget>[
-                      CameraPreview(_cameraService.cameraController),
-                    ]..addAll(_buildFaces()),
-                  ),
-                  Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: CameraOptions(),
-                  ),
-                ],
-              );
-            }
-
-            return AppLoader();
-          },
-        ),
-      ],
-    );
-  }
-
-  List<Widget> _buildFaces() {
-    List<Widget> faces = <Widget>[];
-
-    if (_faces != null) {
-      CameraLensDirection cameraLensDirection =
-          context.read<AppBloc>().state.cameraLensDirection;
-
-      for (Face face in _faces!) {
-        faces
-          ..add(FaceBorder(
-            face: face,
-            imageSize: _imageSize,
-            cameraLensDirection: cameraLensDirection,
-          ))
-          ..add(GooglyEyes(
-            face: face,
-            imageSize: _imageSize,
-            cameraLensDirection: cameraLensDirection,
-          ));
-      }
-    }
-
-    return faces;
-  }
 }

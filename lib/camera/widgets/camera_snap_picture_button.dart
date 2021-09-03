@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_faces/app/widgets/widgets.dart';
+import 'package:flutter_faces/camera/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SnapPictureButton extends StatefulWidget {
-  SnapPictureButton({
+class CameraSnapPictureButton extends StatefulWidget {
+  CameraSnapPictureButton({
     Key? key,
   }) : super(key: key);
 
   @override
-  _SnapPictureButtonState createState() => _SnapPictureButtonState();
+  _CameraSnapPictureButtonState createState() =>
+      _CameraSnapPictureButtonState();
 }
 
-class _SnapPictureButtonState extends State<SnapPictureButton> {
+class _CameraSnapPictureButtonState extends State<CameraSnapPictureButton> {
   @override
   Widget build(
     BuildContext context,
   ) =>
-      ActionButton(
+      CameraActionButton(
         onPressed: _tapSnapPicture,
         icon: Icon(Icons.photo_camera),
         message: AppLocalizations.of(context)!.snapPicture,

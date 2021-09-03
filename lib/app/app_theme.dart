@@ -8,4 +8,9 @@ ThemeData appThemeData = ThemeData(
   accentIconTheme: IconThemeData(
     color: Colors.white.withOpacity(0.7),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+  ),
 );

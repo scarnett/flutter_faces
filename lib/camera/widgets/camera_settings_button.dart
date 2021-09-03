@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_faces/app/widgets/widgets.dart';
+import 'package:flutter_faces/camera/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SettingsButton extends StatefulWidget {
-  SettingsButton({
+class CameraSettingsButton extends StatefulWidget {
+  CameraSettingsButton({
     Key? key,
   }) : super(key: key);
 
   @override
-  _SettingsButtonState createState() => _SettingsButtonState();
+  _CameraSettingsButtonState createState() => _CameraSettingsButtonState();
 }
 
-class _SettingsButtonState extends State<SettingsButton> {
+class _CameraSettingsButtonState extends State<CameraSettingsButton> {
   @override
   Widget build(
     BuildContext context,
   ) =>
-      ActionButton(
+      CameraActionButton(
         onPressed: _tapSettings,
         icon: Icon(Icons.settings),
         message: AppLocalizations.of(context)!.settings,
