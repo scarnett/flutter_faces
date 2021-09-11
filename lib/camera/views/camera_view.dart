@@ -43,7 +43,7 @@ class _CameraViewPageState extends State<CameraViewPage>
   FaceNetService _faceNetService = FaceNetService();
   MLKitService _mlKitService = MLKitService();
 
-  late Future _initializeControllerFuture;
+  Future? _initializeControllerFuture;
   late CameraLensDirection _cameraLensDirection;
 
   bool _cameraInitializated = false;
@@ -160,7 +160,7 @@ class _CameraViewPageState extends State<CameraViewPage>
   }
 
   Widget _buildContent() {
-    if (!_cameraInitializated) {
+    if (!_cameraInitializated || (_initializeControllerFuture == null)) {
       return AppLoader();
     }
 

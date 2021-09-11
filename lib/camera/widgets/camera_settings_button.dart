@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_faces/camera/widgets/widgets.dart';
+import 'package:flutter_faces/settings/views/views.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CameraSettingsButton extends StatefulWidget {
@@ -23,5 +24,5 @@ class _CameraSettingsButtonState extends State<CameraSettingsButton> {
         message: AppLocalizations.of(context)!.settings,
       );
 
-  void _tapSettings() => print('SETTINGS!'); // TODO!
+  void _tapSettings() => Navigator.push(context, SettingsPage.route());
 }
