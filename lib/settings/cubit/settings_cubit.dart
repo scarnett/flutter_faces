@@ -23,6 +23,20 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
         blinkDetection: status,
       ));
 
+  void eyeBorderColorChanged(
+    String color,
+  ) =>
+      emit(state.copyWith(
+        eyeBorderColor: color,
+      ));
+
+  void eyePupilColorChanged(
+    String color,
+  ) =>
+      emit(state.copyWith(
+        eyePupilColor: color,
+      ));
+
   void faceBorderChanged(
     bool status,
   ) =>
@@ -37,6 +51,8 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
       SettingsState(
         googlyEyes: json['googlyEyes'] as bool,
         blinkDetection: json['blinkDetection'] as bool,
+        eyeBorderColor: json['eyeBorderColor'] as String,
+        eyePupilColor: json['eyePupilColor'] as String,
         faceBorder: json['faceBorder'] as bool,
       );
 
@@ -47,6 +63,8 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
       {
         'googlyEyes': state.googlyEyes,
         'blinkDetection': state.blinkDetection,
+        'eyeBorderColor': state.eyeBorderColor,
+        'eyePupilColor': state.eyePupilColor,
         'faceBorder': state.faceBorder,
       };
 }
