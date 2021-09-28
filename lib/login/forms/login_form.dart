@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/login/cubit/cubit.dart';
 import 'package:flutter_faces/login/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:formz/formz.dart';
 
 class LoginForm extends StatelessWidget {
@@ -22,8 +23,8 @@ class LoginForm extends StatelessWidget {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
-                const SnackBar(
-                  content: Text('Authentication Failure'), // TODO! i10n
+                SnackBar(
+                  content: Text(AppLocalizations.of(context)!.authFailure),
                 ),
               );
           }

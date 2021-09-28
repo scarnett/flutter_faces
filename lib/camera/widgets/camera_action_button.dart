@@ -24,10 +24,10 @@ class CameraActionButton extends StatelessWidget {
         child: Material(
           shape: const CircleBorder(),
           clipBehavior: Clip.antiAlias,
-          color: Theme.of(context).accentColor.withOpacity(0.5),
+          color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
           elevation: 0.0,
           child: IconTheme.merge(
-            data: Theme.of(context).accentIconTheme,
+            data: Theme.of(context).iconTheme,
             child: IconButton(
               onPressed: onPressed,
               icon: icon,

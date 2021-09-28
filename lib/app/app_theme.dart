@@ -3,14 +3,24 @@ import 'package:flutter/material.dart';
 ThemeData appThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   primaryColor: Colors.white,
-  accentColor: Colors.black,
   fontFamily: 'roboto',
-  accentIconTheme: IconThemeData(
-    color: Colors.white.withOpacity(0.7),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.green,
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
+    ),
+  ),
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.all(Colors.green),
+  ),
+  textTheme: TextTheme(
+    headline6: TextStyle(
+      color: Colors.green,
+      fontSize: 16.0,
+      height: 1.0,
+      fontWeight: FontWeight.bold,
     ),
   ),
 );

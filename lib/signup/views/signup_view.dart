@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignupView extends StatelessWidget {
   static Route route() => MaterialPageRoute<void>(
@@ -14,7 +15,7 @@ class SignupView extends StatelessWidget {
     BuildContext context,
   ) =>
       Scaffold(
-        appBar: AppBar(title: const Text('Sign Up')), // TODO! i10n
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.signUp)),
         body: Container(), // TODO!
       );
 }

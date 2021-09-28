@@ -1,18 +1,82 @@
 {
+  "login": "Login",
+  "@login": {
+    "description": "The login text"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "The sign up text"
+  },
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "The create account text"
+  },
+  "authFailure": "Authentication Failure",
+  "@authFailure": {
+    "description": "The authentication failure snackbar message"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "The password text"
+  },
+  "invalidPassword": "Invalid Password",
+  "@invalidPassword": {
+    "description": "The invalid password text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "The email text"
+  },
+  "invalidEmail": "Invalid Email",
+  "@invalidEmail": {
+    "description": "The invalid email text"
+  },
+  "googleSignin": "Sign in with Google",
+  "@googleSignin": {
+    "description": "The sign in with google text"
+  },
   "toggleCameraDirection": "Toggle Camera Direction",
   "@toggleCameraDirection": {
     "description": "The camera toggle floating action button tooltip message"
   },
   "snapPicture": "Snap a Picture",
-  "@snapPictureDirection": {
+  "@snapPicture": {
     "description": "Snaps a picture using the camera"
   },
   "recordVideo": "Record a Video",
-  "@recordVideoDirection": {
+  "@recordVideo": {
     "description": "Starts recording a video using the camera"
   },
   "settings": "Settings",
-  "@settingsDirection": {
+  "@settings": {
     "description": "Displays the application settings"
+  },
+  "faces": "Faces",
+  "@faces": {
+    "description": "The faces text"
+  },
+  "googlyEyes": "Googly Eyes",
+  "@googlyEyes": {
+    "description": "Toggles the googly eyes setting"
+  },
+  "googlyEyesHint": "Adds googly eyes to every detected face",
+  "@googlyEyesHint": {
+    "description": "Googly eyes hint text"
+  },
+  "blinkDetection": "Blink Detection",
+  "@blinkDetection": {
+    "description": "Toggles the blink detection setting"
+  },
+  "blinkDetectionHint": "Adds a blink effect to the googly eyes",
+  "@blinkDetectionHint": {
+    "description": "Blink detection hint text"
+  },
+  "faceBorder": "Show Face Border",
+  "@faceBorder": {
+    "description": "Toggles the face border setting"
+  },
+  "faceBorderHint": "Adds a border around each detected face",
+  "@faceBorderHint": {
+    "description": "Face border hint text"
   }
 }

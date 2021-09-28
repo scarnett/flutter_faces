@@ -8,6 +8,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 class GooglyEyes extends StatefulWidget {
   final Face? face;
   final Size imageSize;
+  final bool blinkDetection;
   final double maxRadius;
   final double minRadius;
   final double eyeClosedThreshold;
@@ -17,6 +18,7 @@ class GooglyEyes extends StatefulWidget {
     Key? key,
     required this.face,
     required this.imageSize,
+    required this.blinkDetection,
     this.maxRadius: 60.0,
     this.minRadius: 10.0,
     this.eyeClosedThreshold: 0.3,
@@ -46,15 +48,19 @@ class _GooglyEyesState extends State<GooglyEyes> {
         maxRadius: widget.maxRadius,
         minRadius: widget.minRadius,
         leftEyePhysics: _leftEyePhysics,
-        leftEyeOpen: isEyeOpen(
-          widget.face!.leftEyeOpenProbability,
-          eyeClosedThreshold: widget.eyeClosedThreshold,
-        ),
+        leftEyeOpen: widget.blinkDetection
+            ? isEyeOpen(
+                widget.face!.leftEyeOpenProbability,
+                eyeClosedThreshold: widget.eyeClosedThreshold,
+              )
+            : true,
         rightEyePhysics: _rightEyePhysics,
-        rightEyeOpen: isEyeOpen(
-          widget.face!.rightEyeOpenProbability,
-          eyeClosedThreshold: widget.eyeClosedThreshold,
-        ),
+        rightEyeOpen: widget.blinkDetection
+            ? isEyeOpen(
+                widget.face!.rightEyeOpenProbability,
+                eyeClosedThreshold: widget.eyeClosedThreshold,
+              )
+            : true,
         cameraLensDirection: widget.cameraLensDirection,
       ),
     );

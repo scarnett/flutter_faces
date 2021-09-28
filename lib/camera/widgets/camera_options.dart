@@ -18,7 +18,7 @@ class _CameraOptionsState extends State<CameraOptions> {
     BuildContext context,
   ) =>
       Container(
-        color: Theme.of(context).accentColor.withOpacity(0.3),
+        color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         child: CarouselSlider(

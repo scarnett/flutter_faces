@@ -19,10 +19,10 @@ class _CameraSettingsButtonState extends State<CameraSettingsButton> {
     BuildContext context,
   ) =>
       CameraActionButton(
-        onPressed: _tapSettings,
+        onPressed: _onTap,
         icon: Icon(Icons.settings),
         message: AppLocalizations.of(context)!.settings,
       );
 
-  void _tapSettings() => Navigator.push(context, SettingsPage.route());
+  void _onTap() => Navigator.of(context).push(SettingsPage.route());
 }

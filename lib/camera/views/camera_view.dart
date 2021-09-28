@@ -8,10 +8,11 @@ import 'package:flutter_faces/camera/camera.dart';
 import 'package:flutter_faces/camera/widgets/widgets.dart';
 import 'package:flutter_faces/faces/widgets/widgets.dart';
 import 'package:flutter_faces/services/services.dart';
+import 'package:flutter_faces/settings/cubit/cubit.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class CameraView extends StatelessWidget {
+class CameraView extends StatefulWidget {
   static Page page() => const MaterialPage<void>(child: CameraView());
 
   const CameraView({
@@ -19,26 +20,10 @@ class CameraView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(
-    BuildContext context,
-  ) =>
-      BlocProvider(
-        create: (BuildContext context) => CameraBloc(),
-        child: CameraViewPage(),
-      );
+  _CameraViewState createState() => _CameraViewState();
 }
 
-class CameraViewPage extends StatefulWidget {
-  const CameraViewPage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _CameraViewPageState createState() => _CameraViewPageState();
-}
-
-class _CameraViewPageState extends State<CameraViewPage>
-    with WidgetsBindingObserver {
+class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   CameraService _cameraService = CameraService();
   FaceNetService _faceNetService = FaceNetService();
   MLKitService _mlKitService = MLKitService();
@@ -75,7 +60,7 @@ class _CameraViewPageState extends State<CameraViewPage>
           BuildContext context,
           CameraState state,
         ) async =>
-            await _blocListener(context, state),
+            await _cameraBlocListener(context, state),
         child: AppUiOverlayStyle(
           child: Scaffold(
             body: _buildContent(),
@@ -144,7 +129,7 @@ class _CameraViewPageState extends State<CameraViewPage>
     });
   }
 
-  Future<void> _blocListener(
+  Future<void> _cameraBlocListener(
     BuildContext context,
     CameraState state,
   ) async {
@@ -201,21 +186,25 @@ class _CameraViewPageState extends State<CameraViewPage>
     List<Widget> faces = <Widget>[];
 
     if (_faces != null) {
-      CameraLensDirection cameraLensDirection =
-          context.read<CameraBloc>().state.cameraLensDirection;
+      SettingsState settingsState = context.read<SettingsCubit>().state;
 
       for (Face face in _faces!) {
-        faces
-          ..add(FaceBorder(
+        if (settingsState.faceBorder) {
+          faces.add(FaceBorder(
             face: face,
             imageSize: _imageSize,
-            cameraLensDirection: cameraLensDirection,
-          ))
-          ..add(GooglyEyes(
-            face: face,
-            imageSize: _imageSize,
-            cameraLensDirection: cameraLensDirection,
+            cameraLensDirection: _cameraLensDirection,
           ));
+        }
+
+        if (settingsState.googlyEyes) {
+          faces.add(GooglyEyes(
+            face: face,
+            imageSize: _imageSize,
+            cameraLensDirection: _cameraLensDirection,
+            blinkDetection: settingsState.blinkDetection,
+          ));
+        }
       }
     }
 

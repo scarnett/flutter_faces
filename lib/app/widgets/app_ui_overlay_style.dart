@@ -18,7 +18,7 @@ class AppUiOverlayStyle extends StatelessWidget {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
           systemNavigationBarColor:
-              Theme.of(context).accentColor.withOpacity(0.3),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.3),
           systemNavigationBarDividerColor: Colors.transparent,
           systemNavigationBarIconBrightness: Brightness.light,
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/login/cubit/cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginEmailField extends StatelessWidget {
   @override
@@ -23,10 +24,11 @@ class LoginEmailField extends StatelessWidget {
               context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'Email', // TODO! i10n
+            labelText: AppLocalizations.of(context)!.email,
             helperText: '',
-            errorText:
-                state.email.invalid ? 'Invalid Email' : null, // TODO! i10n
+            errorText: state.email.invalid
+                ? AppLocalizations.of(context)!.invalidEmail
+                : null,
           ),
         ),
       );
