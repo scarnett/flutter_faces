@@ -22,12 +22,15 @@ class AppCheckboxTile extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      CheckboxListTile(
-        title: Text(title),
-        subtitle: (subtitle == null) ? null : Text(subtitle!),
-        secondary: (icon == null) ? null : Icon(icon),
-        value: checked,
-        onChanged: onTap,
-        controlAffinity: affinity,
+      Opacity(
+        opacity: (onTap == null) ? 0.5 : 1.0,
+        child: CheckboxListTile(
+          title: Text(title),
+          subtitle: (subtitle == null) ? null : Text(subtitle!),
+          secondary: (icon == null) ? null : Icon(icon),
+          value: checked,
+          onChanged: onTap,
+          controlAffinity: affinity,
+        ),
       );
 }

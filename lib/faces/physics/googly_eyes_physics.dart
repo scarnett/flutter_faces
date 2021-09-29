@@ -23,8 +23,8 @@ class GooglyEyesPhysics {
   Offset? _eyePosition;
   double? _eyeRadius;
 
-  Offset? _pupilPosition;
-  double? _pupilRadius;
+  Offset? _irisPosition;
+  double? _irisRadius;
 
   // Velocity is independent of the final rendering coordinate system, so that
   // we don't have to change it as the eye gets bigger or smaller by forward
@@ -34,27 +34,27 @@ class GooglyEyesPhysics {
   double _vy = 0.0;
 
   // Keep track of bounces that immediately occur consecutively, since this
-  // means that the pupil is bouncing too fast.  When this happens, we dampen
+  // means that the iris is bouncing too fast.  When this happens, we dampen
   // the velocity to avoid infinite bounces.
   int _consecutiveBounces = 0;
 
-  /// Generate the next position of the pupil based on simulated velocity,
+  /// Generate the next position of the iris based on simulated velocity,
   /// eye boundaries, gravity, friction, and bounce momentum.
-  Offset nextPupilPosition(
+  Offset nextIrisPosition(
     Offset eyePosition,
     double eyeRadius,
-    double pupilRadius,
+    double irisRadius,
   ) {
     // Correct the current eye position and size based on recent motion of the
-    // face within the frame. Keep the current pupil position, if available.
+    // face within the frame. Keep the current iris position, if available.
     _eyePosition = eyePosition;
     _eyeRadius = eyeRadius;
 
-    if (_pupilPosition == null) {
-      _pupilPosition = _eyePosition;
+    if (_irisPosition == null) {
+      _irisPosition = _eyePosition;
     }
 
-    _pupilRadius = pupilRadius;
+    _irisRadius = irisRadius;
 
     // Keep track of time, so that we can consistently update the simulation
     // proportionally to how much time has elapsed. This makes the animation
@@ -66,28 +66,28 @@ class GooglyEyesPhysics {
     _lastUpdateTime = now;
 
     if (!_isStopped()) {
-      // Only apply gravity when the pupil is not stopped at the bottom of
+      // Only apply gravity when the iris is not stopped at the bottom of
       // the eye.
       _vy += (_gravity * simulationRate);
     }
 
-    // Apply friction in the opposite direction of motion, so that the pupil
+    // Apply friction in the opposite direction of motion, so that the iris
     // slows in the absence of other head motion.
     _vx = _applyFriction(_vx, simulationRate);
     _vy = _applyFriction(_vy, simulationRate);
 
-    // Update the pupil position based on velocity. Since velocity is
-    // size-independent, scale by the pupil radius to get the change in position.
-    double x = (_pupilPosition!.dx + (_vx * _pupilRadius! * simulationRate));
-    double y = (_pupilPosition!.dy + (_vy * _pupilRadius! * simulationRate));
-    _pupilPosition = Offset(x, y);
+    // Update the iris position based on velocity. Since velocity is
+    // size-independent, scale by the iris radius to get the change in position.
+    double x = (_irisPosition!.dx + (_vx * _irisRadius! * simulationRate));
+    double y = (_irisPosition!.dy + (_vy * _irisRadius! * simulationRate));
+    _irisPosition = Offset(x, y);
 
-    // Correct the position and velocity of the pupil if it has gone out of
+    // Correct the position and velocity of the iris if it has gone out of
     // bounds, guaranteeing that the returned result is at a valid position
     // within the eye.
-    _makePupilInBounds(simulationRate);
+    _makeIrisInBounds(simulationRate);
 
-    return _pupilPosition!;
+    return _irisPosition!;
   }
 
   /// Friction slows velocity in the opposite direction of motion, until zero
@@ -107,53 +107,53 @@ class GooglyEyesPhysics {
     return velocity;
   }
 
-  /// Correct the pupil position to be in-bounds within the eye, if it is now
+  /// Correct the iris position to be in-bounds within the eye, if it is now
   /// out of bounds.  Being out of bounds could have been due to a sudden
   /// movement of the head and/or camera, or then result of just
   /// bouncing/rolling around.
   ///
   /// In addition, modify the velocity to cause a bounce in the
   /// opposite direction.
-  void _makePupilInBounds(
+  void _makeIrisInBounds(
     double simulationRate,
   ) {
-    num pupilOffsetX = (_pupilPosition!.dx - _eyePosition!.dx);
-    num pupilOffsetY = (_pupilPosition!.dy - _eyePosition!.dy);
+    num irisOffsetX = (_irisPosition!.dx - _eyePosition!.dx);
+    num irisOffsetY = (_irisPosition!.dy - _eyePosition!.dy);
 
-    double maxDistance = (_eyeRadius! - _pupilRadius!);
+    double maxDistance = (_eyeRadius! - _irisRadius!);
     double distance =
-        math.sqrt(math.pow(pupilOffsetX, 2) + math.pow(pupilOffsetY, 2));
+        math.sqrt(math.pow(irisOffsetX, 2) + math.pow(irisOffsetY, 2));
 
     if (distance <= maxDistance) {
-      // The pupil is in bounds, so no correction is necessary.
+      // The iris is in bounds, so no correction is necessary.
       _consecutiveBounces = 0;
       return;
     }
 
     // Accumulate a consecutive bounce count, in order to dampen the momentum
-    // of a quickly moving pupil. Two or more bounces in a row indicates that
-    // the pupil is moving so fast that it doesn't even travel inside the eye.
+    // of a quickly moving iris. Two or more bounces in a row indicates that
+    // the iris is moving so fast that it doesn't even travel inside the eye.
     // We progressively slow the velocity using this count until this is no
     // longer the case.
     _consecutiveBounces++;
 
-    // Move the pupil back to where it would have been when it would have
+    // Move the iris back to where it would have been when it would have
     // contacted the side of the eye.
     double ratio = (maxDistance / distance);
-    double x = (_eyePosition!.dx + (ratio * pupilOffsetX));
-    double y = (_eyePosition!.dy + (ratio * pupilOffsetY));
+    double x = (_eyePosition!.dx + (ratio * irisOffsetX));
+    double y = (_eyePosition!.dy + (ratio * irisOffsetY));
 
     // Update the velocity direction and magnitude to cause a bounce.
-    double dx = (x - _pupilPosition!.dx);
+    double dx = (x - _irisPosition!.dx);
     _vx = (_applyBounce(_vx, dx, simulationRate) / _consecutiveBounces);
 
-    double dy = (y - _pupilPosition!.dy);
+    double dy = (y - _irisPosition!.dy);
     _vy = (_applyBounce(_vy, dy, simulationRate) / _consecutiveBounces);
-    _pupilPosition = Offset(x, y);
+    _irisPosition = Offset(x, y);
   }
 
   /// Update velocity in response to bouncing off the sides of the eye
-  /// (i.e., when pupil hits the bottom or the eye moves quickly). This is the
+  /// (i.e., when iris hits the bottom or the eye moves quickly). This is the
   /// only way to gain horizontal velocity, since there is no other
   /// horizontal force.
   double _applyBounce(
@@ -169,12 +169,12 @@ class GooglyEyesPhysics {
     // Reverse velocity to create a bounce in the opposite direction.
     velocity *= -1.0;
 
-    // If distOutOfBounds was large, this indicates that the pupil was whacked
+    // If distOutOfBounds was large, this indicates that the iris was whacked
     // against the side of the eye quickly. Add an additional velocity factor
     // to account for the force gained by this quick movement, based upon how
     // much it was out of bounds.
     double bounce =
-        (_bounceMultiplier * (distOutOfBounds / _pupilRadius!).abs());
+        (_bounceMultiplier * (distOutOfBounds / _irisRadius!).abs());
 
     if (velocity > 0.0) {
       velocity += (bounce * simulationRate);
@@ -185,16 +185,16 @@ class GooglyEyesPhysics {
     return velocity;
   }
 
-  /// The pupil is stopped if it is at the bottom of the eye and its velocity
+  /// The iris is stopped if it is at the bottom of the eye and its velocity
   /// is zero.
   bool _isStopped() {
-    if (_eyePosition!.dy >= _pupilPosition!.dy) {
+    if (_eyePosition!.dy >= _irisPosition!.dy) {
       return false;
     }
 
-    num pupilOffsetY = (_pupilPosition!.dy - _eyePosition!.dy);
-    double maxDistance = (_eyeRadius! - _pupilRadius!);
-    if (pupilOffsetY < maxDistance) {
+    num irisOffsetY = (_irisPosition!.dy - _eyePosition!.dy);
+    double maxDistance = (_eyeRadius! - _irisRadius!);
+    if (irisOffsetY < maxDistance) {
       return false;
     }
 

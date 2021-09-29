@@ -91,7 +91,7 @@ class GooglyEyesPainter extends CustomPainter {
       ..color = Colors.white // TODO!
       ..style = PaintingStyle.fill;
 
-    Paint pupilPainter = Paint()
+    Paint irisPainter = Paint()
       ..color = Colors.black // TODO!
       ..style = PaintingStyle.fill;
 
@@ -118,11 +118,11 @@ class GooglyEyesPainter extends CustomPainter {
     if (open) {
       canvas.drawCircle(eyePosition, eyeRadius, eyePainter);
 
-      double pupilRadius = (eyeRadius / 3.0);
-      Offset pupilPosition =
-          physics.nextPupilPosition(eyePosition, eyeRadius, pupilRadius);
+      double irisRadius = (eyeRadius / 3.0);
+      Offset irisPosition =
+          physics.nextIrisPosition(eyePosition, eyeRadius, irisRadius);
 
-      canvas.drawCircle(pupilPosition, pupilRadius, pupilPainter);
+      canvas.drawCircle(irisPosition, irisRadius, irisPainter);
     } else {
       canvas.drawCircle(eyePosition, eyeRadius, eyeLidPainter);
       canvas.save();

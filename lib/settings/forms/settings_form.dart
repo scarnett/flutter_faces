@@ -31,15 +31,16 @@ class SettingsForm extends StatelessWidget {
                 onTap: (bool? status) => _tapGooglyEyes(context, status),
               ),
               Divider(),
-              if (context.read<SettingsCubit>().state.googlyEyes)
-                AppCheckboxTile(
-                  title: AppLocalizations.of(context)!.blinkDetection,
-                  subtitle: AppLocalizations.of(context)!.blinkDetectionHint,
-                  icon: Icons.visibility,
-                  checked: context.read<SettingsCubit>().state.blinkDetection,
-                  onTap: (bool? status) => _tapBlinkDetection(context, status),
-                ),
-              if (context.read<SettingsCubit>().state.googlyEyes) Divider(),
+              AppCheckboxTile(
+                title: AppLocalizations.of(context)!.blinkDetection,
+                subtitle: AppLocalizations.of(context)!.blinkDetectionHint,
+                icon: Icons.visibility,
+                checked: context.read<SettingsCubit>().state.blinkDetection,
+                onTap: context.read<SettingsCubit>().state.googlyEyes
+                    ? (bool? status) => _tapBlinkDetection(context, status)
+                    : null,
+              ),
+              Divider(),
               AppCheckboxTile(
                 title: AppLocalizations.of(context)!.faceBorder,
                 subtitle: AppLocalizations.of(context)!.faceBorderHint,

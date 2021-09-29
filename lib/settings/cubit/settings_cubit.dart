@@ -30,11 +30,11 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
         eyeBorderColor: color,
       ));
 
-  void eyePupilColorChanged(
+  void eyeIrisColorChanged(
     String color,
   ) =>
       emit(state.copyWith(
-        eyePupilColor: color,
+        eyeIrisColor: color,
       ));
 
   void faceBorderChanged(
@@ -49,11 +49,19 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
     Map<String, dynamic> json,
   ) =>
       SettingsState(
-        googlyEyes: json['googlyEyes'] as bool,
-        blinkDetection: json['blinkDetection'] as bool,
-        eyeBorderColor: json['eyeBorderColor'] as String,
-        eyePupilColor: json['eyePupilColor'] as String,
-        faceBorder: json['faceBorder'] as bool,
+        googlyEyes:
+            json.containsKey('googlyEyes') ? json['googlyEyes'] as bool : true,
+        blinkDetection: json.containsKey('blinkDetection')
+            ? json['blinkDetection'] as bool
+            : true,
+        eyeBorderColor: json.containsKey('eyeBorderColor')
+            ? json['eyeBorderColor'] as String
+            : '#000000',
+        eyeIrisColor: json.containsKey('eyeIrisColor')
+            ? json['eyeIrisColor'] as String
+            : '#000000',
+        faceBorder:
+            json.containsKey('faceBorder') ? json['faceBorder'] as bool : false,
       );
 
   @override
@@ -64,7 +72,7 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
         'googlyEyes': state.googlyEyes,
         'blinkDetection': state.blinkDetection,
         'eyeBorderColor': state.eyeBorderColor,
-        'eyePupilColor': state.eyePupilColor,
+        'eyeIrisColor': state.eyeIrisColor,
         'faceBorder': state.faceBorder,
       };
 }

@@ -4,14 +4,14 @@ class SettingsState extends Equatable {
   final bool googlyEyes;
   final bool blinkDetection;
   final String eyeBorderColor;
-  final String eyePupilColor;
+  final String eyeIrisColor;
   final bool faceBorder;
 
   const SettingsState({
     this.googlyEyes: true,
     this.blinkDetection: true,
     this.eyeBorderColor: '#000000',
-    this.eyePupilColor: '#000000',
+    this.eyeIrisColor: '#000000',
     this.faceBorder: false,
   });
 
@@ -19,7 +19,7 @@ class SettingsState extends Equatable {
     this.googlyEyes: true,
     this.blinkDetection: true,
     this.eyeBorderColor: '#000000',
-    this.eyePupilColor: '#000000',
+    this.eyeIrisColor: '#000000',
     this.faceBorder: false,
   });
 
@@ -29,14 +29,14 @@ class SettingsState extends Equatable {
     bool? googlyEyes,
     bool? blinkDetection,
     String? eyeBorderColor,
-    String? eyePupilColor,
+    String? eyeIrisColor,
     bool? faceBorder,
   }) =>
       SettingsState(
         googlyEyes: googlyEyes ?? this.googlyEyes,
         blinkDetection: blinkDetection ?? this.blinkDetection,
         eyeBorderColor: eyeBorderColor ?? this.eyeBorderColor,
-        eyePupilColor: eyePupilColor ?? this.eyePupilColor,
+        eyeIrisColor: eyeIrisColor ?? this.eyeIrisColor,
         faceBorder: faceBorder ?? this.faceBorder,
       );
 
@@ -45,7 +45,7 @@ class SettingsState extends Equatable {
         googlyEyes,
         blinkDetection,
         eyeBorderColor,
-        eyePupilColor,
+        eyeIrisColor,
         faceBorder,
       ];
 }
