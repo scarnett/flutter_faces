@@ -203,6 +203,10 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
             imageSize: _imageSize,
             cameraLensDirection: _cameraLensDirection,
             blinkDetection: settingsState.blinkDetection,
+            eyeColor: settingsState.eyeColor,
+            eyeLidColor: settingsState.eyeLidColor,
+            eyeIrisColor: settingsState.eyeIrisColor,
+            eyeOutlineColor: settingsState.eyeOutlineColor,
           ));
         }
       }

@@ -13,6 +13,10 @@ class GooglyEyes extends StatefulWidget {
   final double minRadius;
   final double eyeClosedThreshold;
   final CameraLensDirection cameraLensDirection;
+  final Color eyeColor;
+  final Color eyeLidColor;
+  final Color eyeOutlineColor;
+  final Color eyeIrisColor;
 
   GooglyEyes({
     Key? key,
@@ -23,6 +27,10 @@ class GooglyEyes extends StatefulWidget {
     this.minRadius: 10.0,
     this.eyeClosedThreshold: 0.3,
     this.cameraLensDirection: CameraLensDirection.front,
+    required this.eyeColor,
+    required this.eyeLidColor,
+    required this.eyeOutlineColor,
+    required this.eyeIrisColor,
   }) : super(key: key);
 
   @override
@@ -62,6 +70,10 @@ class _GooglyEyesState extends State<GooglyEyes> {
               )
             : true,
         cameraLensDirection: widget.cameraLensDirection,
+        eyeColor: widget.eyeColor,
+        eyeLidColor: widget.eyeLidColor,
+        eyeOutlineColor: widget.eyeOutlineColor,
+        eyeIrisColor: widget.eyeIrisColor,
       ),
     );
   }

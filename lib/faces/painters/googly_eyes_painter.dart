@@ -15,6 +15,10 @@ class GooglyEyesPainter extends CustomPainter {
   final GooglyEyesPhysics rightEyePhysics;
   final bool rightEyeOpen;
   final CameraLensDirection cameraLensDirection;
+  final Color eyeColor;
+  final Color eyeLidColor;
+  final Color eyeOutlineColor;
+  final Color eyeIrisColor;
   final double outlineWidth;
 
   GooglyEyesPainter({
@@ -27,6 +31,10 @@ class GooglyEyesPainter extends CustomPainter {
     required this.rightEyePhysics,
     required this.rightEyeOpen,
     required this.cameraLensDirection,
+    required this.eyeColor,
+    required this.eyeLidColor,
+    required this.eyeOutlineColor,
+    required this.eyeIrisColor,
     this.outlineWidth: 3.0,
   });
 
@@ -84,19 +92,19 @@ class GooglyEyesPainter extends CustomPainter {
     required bool open,
   }) {
     Paint eyePainter = Paint()
-      ..color = Colors.white // TODO!
+      ..color = eyeColor
       ..style = PaintingStyle.fill;
 
     Paint eyeLidPainter = Paint()
-      ..color = Colors.white // TODO!
+      ..color = eyeLidColor
       ..style = PaintingStyle.fill;
 
     Paint irisPainter = Paint()
-      ..color = Colors.black // TODO!
+      ..color = eyeIrisColor
       ..style = PaintingStyle.fill;
 
     Paint outlinePainter = Paint()
-      ..color = Colors.black // TODO!
+      ..color = eyeOutlineColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = outlineWidth;
 

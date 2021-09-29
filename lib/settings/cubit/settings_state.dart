@@ -3,23 +3,29 @@ part of 'settings_cubit.dart';
 class SettingsState extends Equatable {
   final bool googlyEyes;
   final bool blinkDetection;
-  final String eyeBorderColor;
-  final String eyeIrisColor;
+  final Color eyeColor;
+  final Color eyeLidColor;
+  final Color eyeOutlineColor;
+  final Color eyeIrisColor;
   final bool faceBorder;
 
   const SettingsState({
     this.googlyEyes: true,
     this.blinkDetection: true,
-    this.eyeBorderColor: '#000000',
-    this.eyeIrisColor: '#000000',
+    this.eyeColor: Colors.white,
+    this.eyeLidColor: Colors.white,
+    this.eyeOutlineColor: Colors.black,
+    this.eyeIrisColor: Colors.black,
     this.faceBorder: false,
   });
 
   const SettingsState._({
     this.googlyEyes: true,
     this.blinkDetection: true,
-    this.eyeBorderColor: '#000000',
-    this.eyeIrisColor: '#000000',
+    this.eyeColor: Colors.white,
+    this.eyeLidColor: Colors.white,
+    this.eyeOutlineColor: Colors.black,
+    this.eyeIrisColor: Colors.black,
     this.faceBorder: false,
   });
 
@@ -28,14 +34,18 @@ class SettingsState extends Equatable {
   SettingsState copyWith({
     bool? googlyEyes,
     bool? blinkDetection,
-    String? eyeBorderColor,
-    String? eyeIrisColor,
+    Color? eyeColor,
+    Color? eyeLidColor,
+    Color? eyeOutlineColor,
+    Color? eyeIrisColor,
     bool? faceBorder,
   }) =>
       SettingsState(
         googlyEyes: googlyEyes ?? this.googlyEyes,
         blinkDetection: blinkDetection ?? this.blinkDetection,
-        eyeBorderColor: eyeBorderColor ?? this.eyeBorderColor,
+        eyeColor: eyeColor ?? this.eyeColor,
+        eyeLidColor: eyeLidColor ?? this.eyeLidColor,
+        eyeOutlineColor: eyeOutlineColor ?? this.eyeOutlineColor,
         eyeIrisColor: eyeIrisColor ?? this.eyeIrisColor,
         faceBorder: faceBorder ?? this.faceBorder,
       );
@@ -44,7 +54,9 @@ class SettingsState extends Equatable {
   List<Object> get props => [
         googlyEyes,
         blinkDetection,
-        eyeBorderColor,
+        eyeColor,
+        eyeLidColor,
+        eyeOutlineColor,
         eyeIrisColor,
         faceBorder,
       ];
