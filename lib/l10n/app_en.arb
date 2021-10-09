@@ -59,6 +59,38 @@
   "@googlyEyes": {
     "description": "Toggles the googly eyes setting"
   },
+  "eyeColor": "Eye Color",
+  "@eyeColor": {
+    "description": "The color of the eyes"
+  },
+  "eyeColorHint": "Changes the color of the eyes",
+  "@eyeColorHint": {
+    "description": "Eye color hint text"
+  },
+  "eyeLidColor": "Eye Lid Color",
+  "@eyeLidColor": {
+    "description": "The color of the eyes"
+  },
+  "eyeLidColorHint": "Changes the color of the eye lids",
+  "@eyeLidColorHint": {
+    "description": "Eye lid color hint text"
+  },
+  "eyeOutlineColor": "Eye Outline Color",
+  "@eyeOutlineColor": {
+    "description": "The color of the eye outline"
+  },
+  "eyeOutlineColorHint": "Changes the color of the eye outlines",
+  "@eyeOutlineColorHint": {
+    "description": "Eye outline color hint text"
+  },
+  "eyeIrisColor": "Eye Iris Color",
+  "@eyeIrisColor": {
+    "description": "The color of the eye iris"
+  },
+  "eyeIrisColorHint": "Changes the color of the eye iris'",
+  "@eyeIrisColorHint": {
+    "description": "Eye iris color hint text"
+  },
   "googlyEyesHint": "Adds googly eyes to every detected face",
   "@googlyEyesHint": {
     "description": "Googly eyes hint text"

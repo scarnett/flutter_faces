@@ -6,6 +6,7 @@ class AppCheckboxTile extends StatelessWidget {
   final IconData? icon;
   final bool checked;
   final ListTileControlAffinity affinity;
+  final EdgeInsets padding;
   final Function(bool?)? onTap;
 
   const AppCheckboxTile({
@@ -15,6 +16,10 @@ class AppCheckboxTile extends StatelessWidget {
     this.icon,
     required this.checked,
     this.affinity: ListTileControlAffinity.trailing,
+    this.padding: const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 16.0,
+    ),
     this.onTap,
   }) : super(key: key);
 
@@ -31,6 +36,7 @@ class AppCheckboxTile extends StatelessWidget {
           value: checked,
           onChanged: onTap,
           controlAffinity: affinity,
+          contentPadding: padding,
         ),
       );
 }

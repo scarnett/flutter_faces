@@ -8,7 +8,7 @@ class AppSectionHeader extends StatelessWidget {
   AppSectionHeader({
     required this.text,
     this.padding: const EdgeInsets.symmetric(
-      horizontal: 8.0,
+      horizontal: 16.0,
       vertical: 8.0,
     ),
     this.style,

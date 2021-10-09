@@ -27,7 +27,7 @@ class SettingsForm extends StatelessWidget {
                 title: AppLocalizations.of(context)!.googlyEyes,
                 subtitle: AppLocalizations.of(context)!.googlyEyesHint,
                 icon: Icons.radio_button_checked,
-                checked: context.read<SettingsCubit>().state.googlyEyes,
+                checked: state.googlyEyes,
                 onTap: (bool? status) => _tapGooglyEyes(context, status),
               ),
               Divider(),
@@ -35,17 +35,49 @@ class SettingsForm extends StatelessWidget {
                 title: AppLocalizations.of(context)!.blinkDetection,
                 subtitle: AppLocalizations.of(context)!.blinkDetectionHint,
                 icon: Icons.visibility,
-                checked: context.read<SettingsCubit>().state.blinkDetection,
-                onTap: context.read<SettingsCubit>().state.googlyEyes
+                checked: state.blinkDetection,
+                onTap: state.googlyEyes
                     ? (bool? status) => _tapBlinkDetection(context, status)
                     : null,
+              ),
+              Divider(),
+              AppColorPickerTile(
+                title: AppLocalizations.of(context)!.eyeColor,
+                subtitle: AppLocalizations.of(context)!.eyeColorHint,
+                icon: Icons.palette,
+                color: state.eyeColor,
+                onSave: (Color color) => _saveEyeColor(context, color),
+              ),
+              Divider(),
+              AppColorPickerTile(
+                title: AppLocalizations.of(context)!.eyeLidColor,
+                subtitle: AppLocalizations.of(context)!.eyeLidColorHint,
+                icon: Icons.palette,
+                color: state.eyeLidColor,
+                onSave: (Color color) => _saveEyeLidColor(context, color),
+              ),
+              Divider(),
+              AppColorPickerTile(
+                title: AppLocalizations.of(context)!.eyeOutlineColor,
+                subtitle: AppLocalizations.of(context)!.eyeOutlineColorHint,
+                icon: Icons.palette,
+                color: state.eyeOutlineColor,
+                onSave: (Color color) => _saveEyeOutlineColor(context, color),
+              ),
+              Divider(),
+              AppColorPickerTile(
+                title: AppLocalizations.of(context)!.eyeIrisColor,
+                subtitle: AppLocalizations.of(context)!.eyeIrisColorHint,
+                icon: Icons.palette,
+                color: state.eyeIrisColor,
+                onSave: (Color color) => _saveEyeIrisColor(context, color),
               ),
               Divider(),
               AppCheckboxTile(
                 title: AppLocalizations.of(context)!.faceBorder,
                 subtitle: AppLocalizations.of(context)!.faceBorderHint,
                 icon: Icons.face,
-                checked: context.read<SettingsCubit>().state.faceBorder,
+                checked: state.faceBorder,
                 onTap: (bool? status) => _tapFaceBorder(context, status),
               ),
               Divider(),
@@ -65,6 +97,30 @@ class SettingsForm extends StatelessWidget {
     bool? status,
   ) =>
       context.read<SettingsCubit>().blinkDetectionChanged(status!);
+
+  void _saveEyeColor(
+    BuildContext context,
+    Color color,
+  ) =>
+      context.read<SettingsCubit>().eyeColorChanged(color);
+
+  void _saveEyeLidColor(
+    BuildContext context,
+    Color color,
+  ) =>
+      context.read<SettingsCubit>().eyeLidColorChanged(color);
+
+  void _saveEyeOutlineColor(
+    BuildContext context,
+    Color color,
+  ) =>
+      context.read<SettingsCubit>().eyeOutlineColorChanged(color);
+
+  void _saveEyeIrisColor(
+    BuildContext context,
+    Color color,
+  ) =>
+      context.read<SettingsCubit>().eyeIrisColorChanged(color);
 
   void _tapFaceBorder(
     BuildContext context,

@@ -23,4 +23,5 @@ ThemeData appThemeData = ThemeData(
       fontWeight: FontWeight.bold,
     ),
   ),
+  dividerTheme: DividerThemeData(space: 1.0),
 );
