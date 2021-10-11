@@ -19,10 +19,10 @@ class GoogleLoginButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30.0),
           ),
         ),
-        icon: const Icon(
-          Icons.help_outline, // TODO! google icon
-          color: Colors.white,
+        icon: Image.asset(
+          'assets/logos/google.png',
+          height: 20.0,
         ),
-        onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
+        onPressed: () => context.read<LoginCubit>().logInWithGoogle(context),
       );
 }

@@ -15,13 +15,93 @@
   "@authFailure": {
     "description": "The authentication failure snackbar message"
   },
+  "signUpFailure": "Sign Up Failure",
+  "@signUpFailure": {
+    "description": "The sign up failure snackbar message"
+  },
+  "signUpInvalidEmail": "Email is not valid or badly formatted",
+  "@signUpInvalidEmail": {
+    "description": "The invalid email message"
+  },
+  "signUpUserDisabled": "This user has been disabled. Please contact support for help",
+  "@signUpUserDisabled": {
+    "description": "The user disabled message"
+  },
+  "signUpEmailInUse": "An account already exists for that email",
+  "@signUpEmailInUse": {
+    "description": "The email already in use message"
+  },
+  "operationNotAllowed": "Operation is not allowed, please contact support",
+  "@operationNotAllowed": {
+    "description": "The operation not allowed message"
+  },
+  "weakPassword": "Please enter a stronger password",
+  "@weakPassword": {
+    "description": "The weak password message"
+  },
+  "loginInvalidEmail": "Email is not valid or badly formatted",
+  "@loginInvalidEmail": {
+    "description": "The invalid email message"
+  },
+  "loginUserDisabled": "This user has been disabled, please contact support for help",
+  "@loginUserDisabled": {
+    "description": "The user disabled message"
+  },
+  "loginUserNotFound": "Email is not found, please create an account",
+  "@loginUserNotFound": {
+    "description": "The user not found message"
+  },
+  "loginWrongPassword": "Incorrect password, please try again",
+  "@loginWrongPassword": {
+    "description": "The incorrect password message"
+  },
+  "loginGoogleDifferentCreds": "Account exists with different credentials",
+  "@loginGoogleDifferentCreds": {
+    "description": "The account exists with different credentials message"
+  },
+  "loginGoogleInvalidCreds": "The credential received is malformed or has expired",
+  "@loginGoogleInvalidCreds": {
+    "description": "The invalid credentials message"
+  },
+  "loginGoogleOperationNotAllowed": "Operation is not allowed, please contact support",
+  "@loginGoogleOperationNotAllowed": {
+    "description": "The operation not allowed message"
+  },
+  "loginGoogleUserDisabled": "This user has been disabled, please contact support for help",
+  "@loginGoogleUserDisabled": {
+    "description": "The user disabled message"
+  },
+  "loginGoogleUserNotFound": "Email is not found, please create an account",
+  "@loginGoogleUserNotFound": {
+    "description": "The user not found message"
+  },
+  "loginGoogleInvalidVerificationCode": "The credential verification code received is invalid",
+  "@loginGoogleInvalidVerificationCode": {
+    "description": "The invalid verification code message"
+  },
+  "loginGoogleInvalidVerificationId": "The credential verification ID received is invalid",
+  "@loginGoogleInvalidVerificationId": {
+    "description": "The invalid verification id message"
+  },
+  "loginGoogleWrongPassword": "Incorrect password, please try again",
+  "@loginGoogleWrongPassword": {
+    "description": "The wrong password message"
+  },
   "password": "Password",
   "@password": {
     "description": "The password text"
   },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "The confirm password text"
+  },
   "invalidPassword": "Invalid Password",
   "@invalidPassword": {
     "description": "The invalid password text"
+  },
+  "matchPassword": "Passwords to not match",
+  "@matchPassword": {
+    "description": "The password do not match text"
   },
   "email": "Email",
   "@email": {

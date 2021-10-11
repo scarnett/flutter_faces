@@ -5,14 +5,14 @@ import 'package:flutter_faces/app/widgets/widgets.dart';
 import 'package:flutter_faces/auth/auth.dart';
 import 'package:formz/formz.dart';
 
-part 'login_state.dart';
+part 'signup_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
+class SignUpCubit extends Cubit<SignUpState> {
   final AuthenticationRepository _authenticationRepository;
 
-  LoginCubit(
+  SignUpCubit(
     this._authenticationRepository,
-  ) : super(const LoginState());
+  ) : super(const SignUpState());
 
   void emailChanged(
     String value,
@@ -21,7 +21,11 @@ class LoginCubit extends Cubit<LoginState> {
 
     emit(state.copyWith(
       email: email,
-      status: Formz.validate([email, state.password]),
+      status: Formz.validate([
+        email,
+        state.password,
+        state.confirmedPassword,
+      ]),
     ));
   }
 
@@ -29,14 +33,43 @@ class LoginCubit extends Cubit<LoginState> {
     String value,
   ) {
     final AppPasswordField password = AppPasswordField.dirty(value);
+    final AppConfirmPasswordField confirmedPassword =
+        AppConfirmPasswordField.dirty(
+      password: password.value,
+      value: state.confirmedPassword.value,
+    );
 
     emit(state.copyWith(
       password: password,
-      status: Formz.validate([state.email, password]),
+      confirmedPassword: confirmedPassword,
+      status: Formz.validate([
+        state.email,
+        password,
+        confirmedPassword,
+      ]),
     ));
   }
 
-  Future<void> logInWithCredentials(
+  void confirmedPasswordChanged(
+    String value,
+  ) {
+    final AppConfirmPasswordField confirmedPassword =
+        AppConfirmPasswordField.dirty(
+      password: state.password.value,
+      value: value,
+    );
+
+    emit(state.copyWith(
+      confirmedPassword: confirmedPassword,
+      status: Formz.validate([
+        state.email,
+        state.password,
+        confirmedPassword,
+      ]),
+    ));
+  }
+
+  Future<void> signUpFormSubmitted(
     BuildContext context,
   ) async {
     if (!state.status.isValidated) {
@@ -46,32 +79,14 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
 
     try {
-      await _authenticationRepository.logInWithEmailAndPassword(
+      await _authenticationRepository.signUp(
         context: context,
         email: state.email.value,
         password: state.password.value,
       );
 
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on LogInWithEmailAndPasswordFailure catch (e) {
-      emit(state.copyWith(
-        errorMessage: e.message,
-        status: FormzStatus.submissionFailure,
-      ));
-    } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
-  }
-
-  Future<void> logInWithGoogle(
-    BuildContext context,
-  ) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-
-    try {
-      await _authenticationRepository.logInWithGoogle(context);
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on LogInWithGoogleFailure catch (e) {
+    } on SignUpWithEmailAndPasswordFailure catch (e) {
       emit(state.copyWith(
         errorMessage: e.message,
         status: FormzStatus.submissionFailure,
