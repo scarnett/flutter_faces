@@ -60,6 +60,20 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
         faceBorder: status,
       ));
 
+  void faceBorderColorChanged(
+    Color color,
+  ) =>
+      emit(state.copyWith(
+        faceBorderColor: color,
+      ));
+
+  void faceBorderErrorColorChanged(
+    Color color,
+  ) =>
+      emit(state.copyWith(
+        faceBorderErrorColor: color,
+      ));
+
   @override
   SettingsState? fromJson(
     Map<String, dynamic> json,
@@ -84,6 +98,12 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
             : Colors.black,
         faceBorder:
             json.containsKey('faceBorder') ? json['faceBorder'] as bool : false,
+        faceBorderColor: json.containsKey('faceBorderColor')
+            ? (json['faceBorderColor'] as String).toColor()
+            : Colors.green,
+        faceBorderErrorColor: json.containsKey('faceBorderErrorColor')
+            ? (json['faceBorderErrorColor'] as String).toColor()
+            : Colors.red,
       );
 
   @override
@@ -98,5 +118,7 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
         'eyeOutlineColor': state.eyeOutlineColor.toHex(),
         'eyeIrisColor': state.eyeIrisColor.toHex(),
         'faceBorder': state.faceBorder,
+        'faceBorderColor': state.faceBorderColor.toHex(),
+        'faceBorderErrorColor': state.faceBorderErrorColor.toHex(),
       };
 }

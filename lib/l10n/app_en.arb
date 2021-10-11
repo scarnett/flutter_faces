@@ -190,5 +190,21 @@
   "faceBorderHint": "Adds a border around each detected face",
   "@faceBorderHint": {
     "description": "Face border hint text"
+  },
+  "faceBorderColor": "Face Border Color",
+  "@faceBorderColor": {
+    "description": "The color of the face border"
+  },
+  "faceBorderColorHint": "Changes the color of the face border",
+  "@faceBorderColorHint": {
+    "description": "Face border color hint text"
+  },
+  "faceBorderErrorColor": "Face Border Error Color",
+  "@faceBorderErrorColor": {
+    "description": "The color of the face border when in error state"
+  },
+  "faceBorderErrorColorHint": "Changes the color of the face border when in error state",
+  "@faceBorderErrorColorHint": {
+    "description": "Face border error color hint text"
   }
 }

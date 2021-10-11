@@ -7,12 +7,16 @@ class FaceBorder extends StatefulWidget {
   final Face face;
   final Size imageSize;
   final CameraLensDirection cameraLensDirection;
+  final Color faceBorderColor;
+  final Color faceBorderErrorColor;
 
   FaceBorder({
     Key? key,
     required this.face,
     required this.imageSize,
     this.cameraLensDirection: CameraLensDirection.front,
+    required this.faceBorderColor,
+    required this.faceBorderErrorColor,
   }) : super(key: key);
 
   @override
@@ -29,6 +33,8 @@ class _FaceBorderState extends State<FaceBorder> {
           face: widget.face,
           imageSize: widget.imageSize,
           cameraLensDirection: widget.cameraLensDirection,
+          faceBorderColor: widget.faceBorderColor,
+          faceBorderErrorColor: widget.faceBorderErrorColor,
         ),
       );
 }

@@ -194,6 +194,8 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
             face: face,
             imageSize: _imageSize,
             cameraLensDirection: _cameraLensDirection,
+            faceBorderColor: settingsState.faceBorderColor,
+            faceBorderErrorColor: settingsState.faceBorderErrorColor,
           ));
         }
 

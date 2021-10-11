@@ -9,11 +9,15 @@ class FaceBorderPainter extends CustomPainter {
   final Size imageSize;
   final Face face;
   final CameraLensDirection cameraLensDirection;
+  final Color faceBorderColor;
+  final Color faceBorderErrorColor;
 
   FaceBorderPainter({
     required this.imageSize,
     required this.face,
     required this.cameraLensDirection,
+    required this.faceBorderColor,
+    required this.faceBorderErrorColor,
   });
 
   @override
@@ -28,12 +32,12 @@ class FaceBorderPainter extends CustomPainter {
       paint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.0
-        ..color = Colors.red; // TODO!
+        ..color = this.faceBorderErrorColor;
     } else {
       paint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.0
-        ..color = Colors.green; // TODO!
+        ..color = this.faceBorderColor;
     }
 
     canvas.drawRRect(

@@ -4,7 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AppColorPicker extends StatelessWidget {
   final Color color;
-  final Function(Color) onSave;
+  final Function(Color)? onSave;
 
   AppColorPicker({
     Key? key,
@@ -25,7 +25,7 @@ class AppColorPicker extends StatelessWidget {
         content: SingleChildScrollView(
           child: SlidePicker(
             pickerColor: color,
-            onColorChanged: onSave,
+            onColorChanged: (onSave == null) ? (Color color) => {} : onSave!,
             paletteType: PaletteType.rgb,
             enableAlpha: false,
             displayThumbColor: true,

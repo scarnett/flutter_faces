@@ -23,5 +23,8 @@ ThemeData appThemeData = ThemeData(
       fontWeight: FontWeight.bold,
     ),
   ),
-  dividerTheme: DividerThemeData(space: 1.0),
+  dividerTheme: DividerThemeData(
+    space: 1.0,
+    thickness: 1.0,
+  ),
 );

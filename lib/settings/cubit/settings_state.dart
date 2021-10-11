@@ -8,6 +8,8 @@ class SettingsState extends Equatable {
   final Color eyeOutlineColor;
   final Color eyeIrisColor;
   final bool faceBorder;
+  final Color faceBorderColor;
+  final Color faceBorderErrorColor;
 
   const SettingsState({
     this.googlyEyes: true,
@@ -17,6 +19,8 @@ class SettingsState extends Equatable {
     this.eyeOutlineColor: Colors.black,
     this.eyeIrisColor: Colors.black,
     this.faceBorder: false,
+    this.faceBorderColor: Colors.green,
+    this.faceBorderErrorColor: Colors.red,
   });
 
   const SettingsState._({
@@ -27,6 +31,8 @@ class SettingsState extends Equatable {
     this.eyeOutlineColor: Colors.black,
     this.eyeIrisColor: Colors.black,
     this.faceBorder: false,
+    this.faceBorderColor: Colors.green,
+    this.faceBorderErrorColor: Colors.red,
   });
 
   const SettingsState.initial() : this._();
@@ -39,6 +45,8 @@ class SettingsState extends Equatable {
     Color? eyeOutlineColor,
     Color? eyeIrisColor,
     bool? faceBorder,
+    Color? faceBorderColor,
+    Color? faceBorderErrorColor,
   }) =>
       SettingsState(
         googlyEyes: googlyEyes ?? this.googlyEyes,
@@ -48,6 +56,8 @@ class SettingsState extends Equatable {
         eyeOutlineColor: eyeOutlineColor ?? this.eyeOutlineColor,
         eyeIrisColor: eyeIrisColor ?? this.eyeIrisColor,
         faceBorder: faceBorder ?? this.faceBorder,
+        faceBorderColor: faceBorderColor ?? this.faceBorderColor,
+        faceBorderErrorColor: faceBorderErrorColor ?? this.faceBorderErrorColor,
       );
 
   @override
@@ -59,5 +69,7 @@ class SettingsState extends Equatable {
         eyeOutlineColor,
         eyeIrisColor,
         faceBorder,
+        faceBorderColor,
+        faceBorderErrorColor,
       ];
 }

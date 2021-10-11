@@ -8,7 +8,7 @@ class AppColorPickerTile extends StatelessWidget {
   final double paletteSize;
   final EdgeInsets padding;
   final Color color;
-  final Function(Color) onSave;
+  final Function(Color)? onSave;
 
   const AppColorPickerTile({
     Key? key,
@@ -29,17 +29,20 @@ class AppColorPickerTile extends StatelessWidget {
     BuildContext context,
   ) =>
       MergeSemantics(
-        child: ListTile(
-          title: Text(title),
-          subtitle: (subtitle == null) ? null : Text(subtitle!),
-          leading: (icon == null)
-              ? null
-              : Icon(
-                  icon,
-                  color: _getIconColor(),
-                ),
-          onTap: () => _showColorPicker(context),
-          contentPadding: padding,
+        child: Opacity(
+          opacity: (onSave == null) ? 0.3 : 1.0,
+          child: ListTile(
+            title: Text(title),
+            subtitle: (subtitle == null) ? null : Text(subtitle!),
+            leading: (icon == null)
+                ? null
+                : Icon(
+                    icon,
+                    color: _getIconColor(),
+                  ),
+            onTap: () => _showColorPicker(context),
+            contentPadding: padding,
+          ),
         ),
       );
 

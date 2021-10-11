@@ -16,9 +16,6 @@ class SettingsPage extends StatelessWidget {
   ) =>
       Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context)!.settings)),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: const SettingsForm(),
-        ),
+        body: const SettingsForm(),
       );
 }

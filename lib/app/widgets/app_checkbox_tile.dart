@@ -28,7 +28,7 @@ class AppCheckboxTile extends StatelessWidget {
     BuildContext context,
   ) =>
       Opacity(
-        opacity: (onTap == null) ? 0.5 : 1.0,
+        opacity: (onTap == null) ? 0.3 : 1.0,
         child: CheckboxListTile(
           title: Text(title),
           subtitle: (subtitle == null) ? null : Text(subtitle!),
