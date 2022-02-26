@@ -1,9 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/camera/bloc/bloc.dart';
-import 'package:flutter_faces/camera/widgets/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CameraToggleButton extends StatefulWidget {
@@ -20,10 +18,25 @@ class _CameraToggleButtonState extends State<CameraToggleButton> {
   Widget build(
     BuildContext context,
   ) =>
-      CameraActionButton(
-        onPressed: _tapToggleCamera,
-        icon: Icon(_getIcon()),
+      Tooltip(
+        preferBelow: false,
+        verticalOffset: 30.0,
         message: AppLocalizations.of(context)!.toggleCameraDirection,
+        child: Material(
+          shape: const CircleBorder(),
+          clipBehavior: Clip.antiAlias,
+          color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+          elevation: 0.0,
+          child: IconTheme.merge(
+            data: Theme.of(context).iconTheme,
+            child: IconButton(
+              onPressed: _tapToggleCamera,
+              icon: Icon(_getIcon()),
+              iconSize: 30.0,
+              padding: const EdgeInsets.all(20.0),
+            ),
+          ),
+        ),
       );
 
   IconData _getIcon() {

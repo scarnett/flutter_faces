@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_faces/app/widgets/widgets.dart';
 import 'package:flutter_faces/camera/bloc/bloc.dart';
@@ -169,7 +168,17 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
                   ),
                   Align(
                     alignment: FractionalOffset.bottomCenter,
-                    child: CameraOptions(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Align(
+                          alignment: FractionalOffset.bottomRight,
+                          child: CameraSettingsButton(),
+                        ),
+                        CameraOptions(),
+                        CameraOptionButtons(),
+                      ],
+                    ),
                   ),
                 ],
               );

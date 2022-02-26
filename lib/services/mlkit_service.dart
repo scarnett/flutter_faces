@@ -45,7 +45,7 @@ class MLKitService {
           .toList(),
     );
 
-    /// Transform the image input for the faceDetector
+    /// Transform the image input for the face detector
     InputImage _firebaseVisionImage = InputImage.fromBytes(
       bytes: image.planes[0].bytes,
       inputImageData: _firebaseImageMetadata,

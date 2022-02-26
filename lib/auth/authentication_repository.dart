@@ -8,7 +8,6 @@ import 'package:flutter_faces/auth/models/models.dart';
 import 'package:flutter_faces/cache/cache_client.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 
 class SignUpWithEmailAndPasswordFailure implements Exception {
   final String message;

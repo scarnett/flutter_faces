@@ -1,4 +1,30 @@
 import 'package:camera/camera.dart';
+import 'package:flutter_faces/camera/enums/enums.dart';
+
+extension CameraModeExtension on CameraMode {
+  String getString() {
+    switch (this) {
+      case CameraMode.video:
+        return 'video';
+
+      case CameraMode.photo:
+      default:
+        return 'photo';
+    }
+  }
+}
+
+CameraMode getCameraMode({
+  required String str,
+}) {
+  for (CameraMode cameraMode in CameraMode.values) {
+    if (cameraMode.getString() == str) {
+      return cameraMode;
+    }
+  }
+
+  return CameraMode.photo;
+}
 
 extension CameraLensDirectionExtension on CameraLensDirection {
   String getString() {

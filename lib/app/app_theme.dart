@@ -16,6 +16,12 @@ ThemeData appThemeData = ThemeData(
     fillColor: MaterialStateProperty.all(Colors.green),
   ),
   textTheme: TextTheme(
+    headline5: TextStyle(
+      color: Colors.white.withOpacity(0.7),
+      fontSize: 17.0,
+      height: 1.0,
+      fontWeight: FontWeight.bold,
+    ),
     headline6: TextStyle(
       color: Colors.green,
       fontSize: 16.0,

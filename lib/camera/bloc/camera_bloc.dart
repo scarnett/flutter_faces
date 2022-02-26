@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_faces/camera/enums/enums.dart';
 import 'package:flutter_faces/extensions/extensions.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
@@ -18,10 +19,19 @@ class CameraBloc extends HydratedBloc<CameraEvent, CameraState> {
   Stream<CameraState> mapEventToState(
     CameraEvent event,
   ) async* {
-    if (event is ToggleCameraLensDirection) {
+    if (event is SetCameraMode) {
+      yield _mapSetCameraModeToStates(event);
+    } else if (event is ToggleCameraLensDirection) {
       yield _mapToggleCameraLensDirectionToStates(event);
     }
   }
+
+  CameraState _mapSetCameraModeToStates(
+    SetCameraMode event,
+  ) =>
+      state.copyWith(
+        cameraMode: event.cameraMode,
+      );
 
   CameraState _mapToggleCameraLensDirectionToStates(
     ToggleCameraLensDirection event,
@@ -38,6 +48,7 @@ class CameraBloc extends HydratedBloc<CameraEvent, CameraState> {
     Map<String, dynamic> json,
   ) =>
       CameraState(
+        cameraMode: getCameraMode(str: json['cameraMode']),
         cameraLensDirection:
             getCameraLensDirection(str: json['cameraLensDirection']),
       );
@@ -47,6 +58,7 @@ class CameraBloc extends HydratedBloc<CameraEvent, CameraState> {
     CameraState state,
   ) =>
       {
+        'cameraMode': state.cameraMode.getString(),
         'cameraLensDirection': state.cameraLensDirection.getString(),
       };
 }
